@@ -9,7 +9,10 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        milei : '#FF00C8'
+        juan : '#a7dbd5'
+      },
+      padding : {
+        '3' : '0.75rem',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

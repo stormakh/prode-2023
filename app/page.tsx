@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect, useRef } from "react";
+import { useState} from "react";
 import Candidate from "./components/Candidate";
 import Image, { StaticImageData } from "next/image";
 import Icono_Milei from '../public/Icono_Milei.jpg';
@@ -7,6 +7,8 @@ import Icono_Bullrich from '../public/Icono_Bullrich.jpg';
 import Icono_Massa from '../public/Icono_Massa.jpg';
 import Icono_Bregman from '../public/Icono_Bregman.png';
 import Icono_Schiaretti from '../public/Icono_Schiaretti.png';
+import Logo from '../public/Logo.png';
+import {MdExpandMore} from "react-icons/md";
 
 
 const mileiTheme = {
@@ -150,10 +152,21 @@ export default function Hub(){
 
 
     return(
-        <main className="container">
-          <div className=" text-center mb-3 flex flex-row justify-around p-4  border-b">
-            <button className="border-solid border-2 p-1 ">Crea tu Propio Prode</button>
-            <h1>Hub</h1>
+        <main className="">
+          <div className=" text-center  mb-3 flex flex-row py-1 justify-around gap-x-1 border-b bg-teal-500 text-white w-full items-center">
+            {/* <div className=" flex">
+              <h1 className="text-3xl text-">Prode</h1>
+              <h1 className="text-3xl">Arg</h1>
+            </div> */}
+            
+              <Image src={Logo} alt="Prode Arg" style={{maxWidth : '35% ', height : 'auto' }}/>
+            
+            <button className="text-sm border-solid border-2 p-1 rounded-md h-8">Crea el tuyo</button>
+            <div className=" p-2 flex items-center rounded-md justify-around bg-juan h-8 " >
+              <button className=" ">Prode Juan </button>
+              <MdExpandMore fill='#FFFFFF' size='28'/>
+            </div>
+           
           </div>
             <div className="flex flex-col gap-4    p-2">
               
@@ -163,9 +176,6 @@ export default function Hub(){
                 )
               }
             )}  
-            </div>
-            <div>
-              <h1 className=" text-red-700 text-center">Te Pasaste por 15%</h1>
             </div>
             <div className="flex w-full  justify-center items-center">
               <button className="border-solid border-2 p-1">Enviar</button>

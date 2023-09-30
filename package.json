@@ -15,7 +15,8 @@
 		"embla-carousel-react": "^8.0.0-rc14",
 		"next": "latest",
 		"react": "latest",
-		"react-dom": "latest"
+		"react-dom": "latest",
+		"react-icons": "^4.11.0"
 	},
 	"devDependencies": {
 		"@types/node": "latest",

@@ -73,28 +73,28 @@ export default function ScrollerFixed({theme, votes,candidateId, initialVotes} :
 
     function MinusButton({setter, numberPart} : { setter : Dispatch<SetStateAction<voteDouble>>,numberPart : numberPart}){
         return(
-            <button className="px-8 py-1 border-2 rounded-md" onClick={e => handleMinusButton(setter, numberPart) } style={{borderColor : theme.color}}>-</button>
+            <button className="px-8 py-1 border-2 rounded-md w-full" onClick={e => handleMinusButton(setter, numberPart) } style={{borderColor : theme.color}}>-</button>
         )
     }
     function PlusButton({ setter, numberPart} : { setter : Dispatch<SetStateAction<voteDouble>>, numberPart : numberPart}){
         return(
-            <button className="px-8 py-1 border-2 rounded-md" onClick={e => handlePlusButton(setter, numberPart)} style={{borderColor : theme.color}}>+</button>
+            <button className="px-8 py-1 border-2 rounded-md w-full" onClick={e => handlePlusButton(setter, numberPart)} style={{borderColor : theme.color}}>+</button>
         )
     }
 
     return (
         <div className="flex flex-grow justify-center items-center text-xl" style={{...theme}}>
-            <div className="p-1">
+            <div className="p-1 flex-grow">
             <PlusButton  setter={setCurrentSelected} numberPart={numberPart.big}/>
-            <p className="p-4">{currentSelected.big}</p>
+            <p className="p-4 text-3xl">{currentSelected.big}</p>
             <MinusButton  setter={setCurrentSelected} numberPart={numberPart.big}/>
             </div>
             <div className="">
-            <p className="m-0 text-xl">,</p>
+            <p className="m-0 text-3xl">,</p>
             </div>
-            <div className="p-1">
+            <div className="p-1 flex-grow">
             <PlusButton setter={setCurrentSelected} numberPart={numberPart.small}/>
-            <p  className="p-4">{currentSelected.small-(currentSelected.small%1)}</p>
+            <p  className="p-4 text-3xl">{currentSelected.small-(currentSelected.small%1)}</p>
             <MinusButton setter={setCurrentSelected} numberPart={numberPart.small}/>
             </div>
         </div>

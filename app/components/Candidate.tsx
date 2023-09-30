@@ -11,8 +11,8 @@ export default function Candidate({CandidateName,ImageUrl, theme, votes, candida
             
             <div className='flex flex-row justify-around p-2 '>
                 
-                <Image className='border-b-7' src={ImageUrl} alt={CandidateName} style={{maxWidth:'100%', height : '100%', borderBottomColor : theme.color }}/>
-                <div className=' '>
+                <Image className='border-b-7' src={ImageUrl} alt={CandidateName} style={{maxWidth:'50%', height : 'auto', borderBottomColor : theme.color }}/>
+                <div className=' flex-grow'>
                 <h1>{CandidateName}</h1>
                 <ScrollerFixed theme={theme} votes={votes} candidateId={candidateId} initialVotes={initialVotes}/>
                 </div>
