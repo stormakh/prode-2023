@@ -1,0 +1,3 @@
+const DB_USERS_COLLECTION_NAME = "users";
+
+export { DB_USERS_COLLECTION_NAME };
