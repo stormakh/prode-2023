@@ -9,6 +9,7 @@
 		"lint": "next lint"
 	},
 	"dependencies": {
+		"@firebase/analytics": "^0.10.0",
 		"@firebase/firestore": "^4.2.0",
 		"axios": "^1.5.1",
 		"embla-carousel-react": "^8.0.0-rc14",

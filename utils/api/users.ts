@@ -11,10 +11,11 @@ export async function createUser(
 		createdAt: new Date().toISOString(),
 		modifiedAt: new Date().toISOString(),
 	};
-
+	console.log("Insert in users collection");
 	const userRef = doc(
 		collection(db, DB_USERS_COLLECTION_NAME),
 		userModel.uid
 	);
-	await setDoc(userRef, userModel);
+	const usersRes = await setDoc(userRef, userModel);
+	console.log(usersRes);
 }
