@@ -1,31 +1,31 @@
 {
-  "name": "prode-2023",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "axios": "^1.5.1",
-    "embla-carousel-react": "^8.0.0-rc14",
-    "firebase-admin": "^11.11.0",
-    "next": "latest",
-    "react": "latest",
-    "react-dom": "latest"
-  },
-  "devDependencies": {
-    "@types/node": "latest",
-    "@types/react": "latest",
-    "@types/react-dom": "latest",
-    "autoprefixer": "latest",
-    "eslint": "latest",
-    "eslint-config-next": "latest",
-    "firebase": "^10.4.0",
-    "postcss": "latest",
-    "tailwindcss": "latest",
-    "typescript": "latest"
-  }
+	"name": "prode-2023",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"lint": "next lint"
+	},
+	"dependencies": {
+		"@firebase/firestore": "^4.2.0",
+		"axios": "^1.5.1",
+		"embla-carousel-react": "^8.0.0-rc14",
+		"next": "latest",
+		"react": "latest",
+		"react-dom": "latest"
+	},
+	"devDependencies": {
+		"@types/node": "latest",
+		"@types/react": "latest",
+		"@types/react-dom": "latest",
+		"autoprefixer": "latest",
+		"eslint": "latest",
+		"eslint-config-next": "latest",
+		"firebase": "^10.4.0",
+		"postcss": "latest",
+		"tailwindcss": "latest",
+		"typescript": "latest"
+	}
 }

@@ -1,7 +1,7 @@
 import { CreateUserRequestDto, GetUserResponseDto } from "@/models/user";
 import { DB_USERS_COLLECTION_NAME } from "../db/constants";
 import db from "../db";
-import { DocumentReference } from "firebase-admin/firestore";
+import { collection, doc, setDoc } from "@firebase/firestore";
 
 export async function createUser(
 	createUserReq: CreateUserRequestDto
@@ -12,8 +12,9 @@ export async function createUser(
 		modifiedAt: new Date().toISOString(),
 	};
 
-	await db
-		.collection(DB_USERS_COLLECTION_NAME)
-		.doc(userModel.uid)
-		.set(userModel);
+	const userRef = doc(
+		collection(db, DB_USERS_COLLECTION_NAME),
+		userModel.uid
+	);
+	await setDoc(userRef, userModel);
 }
