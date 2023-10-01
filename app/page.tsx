@@ -1,76 +1,13 @@
 'use client'
 import { useState} from "react";
-import Candidate from "./components/Candidate";
-import Image, { StaticImageData } from "next/image";
-import Icono_Milei from '../public/Icono_Milei.jpg';
-import Icono_Bullrich from '../public/Icono_Bullrich.jpg';
-import Icono_Massa from '../public/Icono_Massa.jpg';
-import Icono_Bregman from '../public/Icono_Bregman.png';
-import Icono_Schiaretti from '../public/Icono_Schiaretti.png';
+
+import Image from "next/image";
+
 import Logo from '../public/logo.png';
 import {MdExpandMore} from "react-icons/md";
 
-
-const mileiTheme = {
-  color: '#9C339F',
-}
-const patoTheme = {
-  color: '#F6CA0E',
-}
-const massaTheme = {
-  color: '#63CCE4',
-}
-const BregmanTheme = {
-  color: '#EE265A',
-}
-const schiarettiTheme = {
-  color: '#504EAA',
-}
-
-type CandidateType = {
-  CandidateName: string,
-  ImageUrl: StaticImageData,
-  theme: {
-    color: string,
-  }
-  initialVotes : number,
-  
-}
-
-
-const CandidateList : CandidateType[] = [
-  {
-    CandidateName: "Javier Milei",
-    ImageUrl: Icono_Milei,
-    theme: mileiTheme,
-    initialVotes : 32.5,
-    
-  },
-  {
-    CandidateName: "Patricia Bullrich",
-    ImageUrl: Icono_Bullrich,
-    theme: patoTheme,
-    initialVotes : 27.6,
-  },
-  {
-    CandidateName: "Sergio Massa",
-    ImageUrl: Icono_Massa,
-    theme: massaTheme,
-    initialVotes : 26.5,
-  },
-  {
-    CandidateName: "Myriam Bregman",
-    ImageUrl: Icono_Bregman,
-    theme: BregmanTheme,
-    initialVotes : 5.2,
-  },
-  {
-    CandidateName: "Juan Schiaretti",
-    ImageUrl: Icono_Schiaretti,
-    theme: schiarettiTheme,
-    initialVotes : 4.2,
-  },
-]
+import { CandidateList } from "@/utils/candidateInfo/candidateList";
+import CandidateVoteBox from "./components/CandidateVoteBox";
 
 type voteType = {
   CandidateId : number,
@@ -175,7 +112,7 @@ export default function Hub(){
             <div className="flex flex-col gap-4 p-2">
               {CandidateList.map((candidate,index) => {
                 return(
-                  <Candidate key={index} CandidateName={candidate.CandidateName} ImageUrl={candidate.ImageUrl} theme={candidate.theme} candidateId={vote[index].CandidateId} votes={handleVote} initialVotes={candidate.initialVotes}/>
+                  <CandidateVoteBox key={index} CandidateName={candidate.CandidateName} ImageUrl={candidate.ImageUrl} theme={candidate.theme} candidateId={vote[index].CandidateId} votes={handleVote} initialVotes={candidate.initialVotes}/>
                 )
               }
             )}  

@@ -4,7 +4,7 @@ import ScrollerFixed from './ScrollerFixed'
 import { CSSProperties } from 'react'
 
 
-export default function Candidate({CandidateName,ImageUrl, theme, votes, candidateId, initialVotes} : {CandidateName: string, ImageUrl: StaticImageData, theme : CSSProperties, votes : (candidateId : number, VoteValue : number) => void , candidateId : number, initialVotes : number}){
+export default function CandidateVoteBox({CandidateName,ImageUrl, theme, votes, candidateId, initialVotes} : {CandidateName: string, ImageUrl: StaticImageData, theme : CSSProperties, votes : (candidateId : number, VoteValue : number) => void , candidateId : number, initialVotes : number}){
     return(
           <div className="text-center">
             
