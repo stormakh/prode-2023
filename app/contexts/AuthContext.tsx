@@ -4,6 +4,7 @@ import auth from "@/utils/auth";
 import {
 	GoogleAuthProvider,
 	UserCredential,
+	linkWithPopup,
 	onAuthStateChanged,
 	signInAnonymously,
 	signInWithPopup,
@@ -18,7 +19,7 @@ import {
 } from "react";
 
 interface IAuthContext {
-	signInWithGoogle: () => Promise<UserCredential>;
+	signInWithGoogle: () => Promise<UserCredential> | undefined;
 	logout: () => Promise<void>;
 	signInWithAnonymous: () => Promise<UserCredential>;
 	firebaseUser: any;
@@ -45,8 +46,15 @@ export default function AuthContextProvider({
 		setLoading(false);
 	};
 
-	const signInWithGoogle = () =>
-		signInWithPopup(auth, new GoogleAuthProvider());
+	const signInWithGoogle = () => {
+		const provider = new GoogleAuthProvider();
+		if (auth.currentUser) {
+			return linkWithPopup(auth.currentUser, provider);
+		} else {
+			return signInWithPopup(auth, provider);
+		}
+		return;
+	};
 
 	const signInWithAnonymous = () => signInAnonymously(auth);
 
