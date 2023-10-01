@@ -1,6 +1,8 @@
-import { Router } from "next/router";
+'use client'
+
 import { useAuth } from "../contexts/AuthContext";
 import NavbarVacia from "../components/NavbarVacia";
+import React from "react";
 
 
 
