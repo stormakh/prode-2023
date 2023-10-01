@@ -8,6 +8,8 @@ import { MdExpandMore } from "react-icons/md"
 
 import { CandidateList } from "@/utils/candidateInfo/candidateList"
 import CandidateVoteBox from "../components/CandidateVoteBox"
+import Navbar from "../components/Navbar"
+import { useAuth } from "../contexts/AuthContext"
 
 type voteType = {
   CandidateId: number
@@ -43,9 +45,10 @@ CandidateVote.forEach((candidate, index) => {
 
 export default function Hub() {
   const [vote, setVote] = useState<voteType[]>(CandidateVote)
+  const {firebaseUser} = useAuth();
 
   function handleVote(CandidateId: number, VoteValue: number) {
-    console.log("i  got " + VoteValue + "from " + CandidateId)
+    
     var res = 0
     vote.forEach((candidate) => {
       // sumo los votos de todos los candidatos
@@ -55,7 +58,7 @@ export default function Hub() {
     })
 
     res = res + VoteValue // sumo el voto que se quiere agregar
-    console.log(res + " es el resultado")
+    
     if (res <= 100 && res >= 0) {
       // verifico que no se pase de 100 o a los negativos
       const nextVotes = vote.map((candidate) => {
@@ -80,24 +83,22 @@ export default function Hub() {
       }
     }
   }
+  
+  function getTotalVotes() {
+    var res = 0
+    vote.forEach((candidate) => {
+      res = res + candidate.VoteValue
+    })
+    return res.toFixed(2);
+  }
+
 
   return (
     <main className="">
-      <div className=" text-center  mb-3 flex flex-row py-1 justify-around gap-x-1 border-b bg-teal-500 text-white w-full items-center">
-        <Image
-          src={Logo}
-          alt="Prode Arg"
-          style={{ maxWidth: "35% ", height: "auto" }}
-        />
-        <button className="text-sm border-solid border-2 p-1 rounded-md h-8">
-          Crea el tuyo
-        </button>
-        <div className=" p-2 flex items-center rounded-md justify-around bg-juan h-8 ">
-          <button className=" ">Prode Juan </button>
-          <MdExpandMore fill="#FFFFFF" size="28" />
-        </div>
-      </div>
-      <div className="text-teal-500 max-w-fit  p-2 flex flex-col">
+      <Navbar />
+     
+      <div className="flex justify-center flex-col items-center p-2 ">
+      <div className="text-teal-500 max-w-fit flex flex-col">
         <h2 className="text-2xl font-bold">
           {"User"} {"te intivó al Prode!"}
         </h2>
@@ -108,22 +109,31 @@ export default function Hub() {
         <p className="font-bold border-b-1/2 p-2  border-teal-500">
           Juga y comparti con tus amigos!
         </p>
-      </div>
-      <div className="flex flex-col gap-4 p-2">
-        {CandidateList.map((candidate, index) => {
-          return (
-            <CandidateVoteBox
-              key={index}
-              CandidateName={candidate.CandidateName}
-              ImageUrl={candidate.ImageUrl}
-              theme={candidate.theme}
-              candidateId={vote[index].CandidateId}
-              votes={handleVote}
-              initialVotes={candidate.initialVotes}
-            />
-          )
-        })}
-      </div>
+
+        <div className="flex flex-col md:flex-wrap md:flex-row gap-4">
+          {CandidateList.map((candidate, index) => {
+            return (
+              <CandidateVoteBox
+                key={index}
+                CandidateName={candidate.CandidateName}
+                ImageUrl={candidate.ImageUrl}
+                theme={candidate.theme}
+                candidateId={vote[index].CandidateId}
+                votes={handleVote}
+                initialVotes={candidate.initialVotes}
+              />
+            )
+          })}
+        </div>
+         
+      </div>  
+    </div>
+      
+    <div className="sticky bottom-0   w-full rounded-none  justify-center items-center font-bold text-teal-500 bg-juan p-2 mt-24">
+              <p>{'Tus votos totales son :'+ getTotalVotes() + '%'}</p>
+    </div>
+      
+      
       <div className="flex w-full  justify-center items-center font-bold text-white p-2 mt-24">
         <button className="p-2 rounded-md bg-teal-500 text-xl">
           Ver Resultados
@@ -136,6 +146,9 @@ export default function Hub() {
           modificadas tras el transcurso de una semana.
         </p>
       </div>
+
+      
+      
     </main>
   )
 }

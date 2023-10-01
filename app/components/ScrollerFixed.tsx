@@ -24,7 +24,7 @@ export default function ScrollerFixed({theme, votes,candidateId, initialVotes} :
             newVoteValue = newVoteValue + 0.01;
         }
         try {
-            console.log('sending vote' + newVoteValue)
+           
             votes(candidateId, newVoteValue);
             if (numberPart == "big") {
                 setter(prevState => ({...prevState, big: prevState.big + 1}));
@@ -45,7 +45,8 @@ export default function ScrollerFixed({theme, votes,candidateId, initialVotes} :
     }
 
     const handleMinusButton =  (setter : Dispatch<SetStateAction<voteDouble>>, numberPart : numberPart ) => {
-        if(currentSelected.small == 0 && numberPart == "small"){
+    
+        if(currentSelected.small-1 < 0 && numberPart == "small"){
             return;
         }
         if(currentSelected.big == 0 && numberPart == "big"){
