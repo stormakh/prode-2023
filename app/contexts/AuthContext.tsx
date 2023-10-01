@@ -15,6 +15,7 @@ import {
 	createContext,
 	useContext,
 	useEffect,
+	useMemo,
 	useState,
 } from "react";
 
@@ -23,6 +24,7 @@ interface IAuthContext {
 	logout: () => Promise<void>;
 	signInWithAnonymous: () => Promise<UserCredential>;
 	firebaseUser: any;
+	isAuthenticated: boolean;
 }
 
 export const AuthContext = createContext<IAuthContext | null>(null);
@@ -64,6 +66,10 @@ export default function AuthContextProvider({
 		return () => unsubscribeAuthState();
 	}, []);
 
+	const isAuthenticated = useMemo(() => {
+		return firebaseUser !== null} , [firebaseUser]);
+	
+
 	return (
 		<AuthContext.Provider
 			value={{
@@ -71,6 +77,7 @@ export default function AuthContextProvider({
 				logout,
 				signInWithAnonymous,
 				firebaseUser,
+				isAuthenticated,
 			}}
 		>
 			{children}

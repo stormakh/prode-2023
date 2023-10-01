@@ -18,7 +18,8 @@
 		"next": "latest",
 		"react": "latest",
 		"react-dom": "latest",
-		"react-icons": "^4.11.0"
+		"react-icons": "^4.11.0",
+		"zod": "^3.22.2"
 	},
 	"devDependencies": {
 		"@types/node": "latest",

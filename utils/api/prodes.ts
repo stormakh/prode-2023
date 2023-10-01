@@ -1,4 +1,4 @@
-import { addDoc, collection, doc, setDoc } from "@firebase/firestore";
+import { addDoc, collection, doc, documentId, getDoc, getDocs, query, setDoc, where } from "@firebase/firestore";
 import db from "../db";
 import {
 	DB_PRODES_COLLECTION_NAME,
@@ -48,4 +48,22 @@ export async function createProde(prode: CreateProdeRequestDto) {
 	// 		isOwner: true,
 	// 	});
 	// console.log(usersRes);
+}
+
+
+export async function checkIfProdeNameExists(prodeName : string){
+	
+	if(prodeName){
+		const prodeRef = doc(db, DB_PRODES_COLLECTION_NAME, prodeName);
+		// const q  =  await query(prodeRef,where('name', '==', prodeName));
+	 	const docSnapshot = await getDoc(prodeRef);
+	//  const docs = querySnapshot.docs.map(doc => doc.data());
+	//  return docs;
+		return docSnapshot.exists()
+}
+	else{
+		return false;
+	}
+
+	
 }
