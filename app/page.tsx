@@ -12,19 +12,19 @@ import {MdExpandMore} from "react-icons/md";
 
 
 const mileiTheme = {
-  color: '#FF00C8',
+  color: '#9C339F',
 }
 const patoTheme = {
-  color: '#fbbf24',
+  color: '#F6CA0E',
 }
 const massaTheme = {
-  color: '#38bdf8',
+  color: '#63CCE4',
 }
 const BregmanTheme = {
-  color: '#f87171',
+  color: '#EE265A',
 }
 const schiarettiTheme = {
-  color: '#6ee7b7',
+  color: '#504EAA',
 }
 
 type CandidateType = {
@@ -154,22 +154,25 @@ export default function Hub(){
     return(
         <main className="">
           <div className=" text-center  mb-3 flex flex-row py-1 justify-around gap-x-1 border-b bg-teal-500 text-white w-full items-center">
-            {/* <div className=" flex">
-              <h1 className="text-3xl text-">Prode</h1>
-              <h1 className="text-3xl">Arg</h1>
-            </div> */}
-            
               <Image src={Logo} alt="Prode Arg" style={{maxWidth : '35% ', height : 'auto' }}/>
-            
             <button className="text-sm border-solid border-2 p-1 rounded-md h-8">Crea el tuyo</button>
             <div className=" p-2 flex items-center rounded-md justify-around bg-juan h-8 " >
               <button className=" ">Prode Juan </button>
               <MdExpandMore fill='#FFFFFF' size='28'/>
             </div>
-           
           </div>
-            <div className="flex flex-col gap-4    p-2">
-              
+          <div className="text-teal-500 max-w-fit  p-2 flex flex-col">
+            <h2 className="text-2xl font-bold">
+              {'User'} {'te intivó al Prode!'} 
+            </h2>
+            <p className="font-bold p-1">
+              Elegi los porcentajes que crees que cada uno de los candidatos va a sacar en las elecciones para presidente del 2023.
+            </p>
+            <p className="font-bold border-b-1/2 p-2  border-teal-500">
+              Juga y comparti con tus amigos!
+            </p>
+          </div>
+            <div className="flex flex-col gap-4 p-2">
               {CandidateList.map((candidate,index) => {
                 return(
                   <Candidate key={index} CandidateName={candidate.CandidateName} ImageUrl={candidate.ImageUrl} theme={candidate.theme} candidateId={vote[index].CandidateId} votes={handleVote} initialVotes={candidate.initialVotes}/>
@@ -177,8 +180,11 @@ export default function Hub(){
               }
             )}  
             </div>
-            <div className="flex w-full  justify-center items-center">
-              <button className="border-solid border-2 p-1">Enviar</button>
+            <div className="flex w-full  justify-center items-center font-bold text-white p-2 mt-24">
+              <button className="p-2 rounded-md bg-teal-500 text-xl">Ver Resultados</button>
+            </div>
+            <div className="px-2 my-5 ">
+              <p className="text-center text-xs text-gray-400">Al tocar este boton estas compartiendo tus predicciones con el resto de los integrantes del grupo. Tus predicciones van a poder ser modificadas tras el transcurso de una semana.</p>
             </div>
         </main>
     )
