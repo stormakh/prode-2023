@@ -7,7 +7,7 @@ import Icono_Bullrich from '../public/Icono_Bullrich.jpg';
 import Icono_Massa from '../public/Icono_Massa.jpg';
 import Icono_Bregman from '../public/Icono_Bregman.png';
 import Icono_Schiaretti from '../public/Icono_Schiaretti.png';
-import Logo from '../public/Logo.png';
+import Logo from '../public/logo.png';
 import {MdExpandMore} from "react-icons/md";
 
 
