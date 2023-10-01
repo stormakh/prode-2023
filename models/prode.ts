@@ -1,5 +1,4 @@
 interface IProde {
-	id: string;
 	name: string;
 	slug: string;
 	createdAt: string;
