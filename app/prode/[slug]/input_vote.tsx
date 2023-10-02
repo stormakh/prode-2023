@@ -129,12 +129,12 @@ export default function InputVote({
 
   return (
     <main className="">
-      <Navbar />
+      <Navbar/>
 
       <div className="flex justify-center flex-col items-center p-2 ">
         <div className="text-teal-500 max-w-fit flex flex-col">
           <h2 className="text-2xl font-bold">
-            {"User"} {"te intivó al Prode!"}
+            {firebaseUser ? firebaseUser.email ? firebaseUser.email : 'Usuario Anonimo' : null} {"te intivó al Prode!"}
           </h2>
           <p className="font-bold p-1">
             Elegi los porcentajes que crees que cada uno de los candidatos va a
