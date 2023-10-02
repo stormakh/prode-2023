@@ -11,7 +11,22 @@ type ProdeName = z.infer<typeof prodeNameSchema>;
 
 const prodeNameSchema = z
 	.string()
-	.nonempty()
+	.nonempty( { message: "El nombre no puede estar vacio" })
+	.refine(
+		(value) => {
+			return (
+				!value.includes(".") &&
+				!value.includes("?") &&
+				value.length <= 50
+			);
+		},
+		{
+			message: "El nombre no puede contener puntos ni signos de pregunta",
+		}
+	);
+
+	const prodeNameInputSchema = z
+	.string()
 	.refine(
 		(value) => {
 			return (
@@ -27,7 +42,6 @@ const prodeNameSchema = z
 
 export default function NewProde() {
 	const { isAuthenticated, firebaseUser } = useAuth();
-	const error = true; //esto es solo para usar de ejemplo en el texto de error
 	const router = useRouter();
 
 	function generateSlug(prodName: ProdeName): string {
@@ -42,6 +56,8 @@ export default function NewProde() {
 	}
 
 	const handleCreateProde = async () => {
+		try {
+			prodeNameSchema.parse(prodeName);
 		console.log("creando prode");
 		const newProde: CreateProdeRequestDto = {
 			name: prodeName,
@@ -52,13 +68,18 @@ export default function NewProde() {
 		console.log(prode);
 
 		router.push(`/prode/${newProde.slug}`);
-	};
+	} catch (err) {
+		if (err instanceof z.ZodError) {
+			setCreateProdeError(err.errors[0].message);
+		}
+		}
+	}
 
 	function handleProdeNameInput(e: React.ChangeEvent<HTMLInputElement>) {
 		let input = e.target.value;
 		var errorMessage = "";
 		try {
-			input = prodeNameSchema.parse(input);
+			input = prodeNameInputSchema.parse(input);
 			setProdeName(input);
 			setProdeNameError("");
 		} catch (err) {
@@ -87,7 +108,7 @@ export default function NewProde() {
 						<input
 							type="text"
 							placeholder="Prode Familia Fernadez..."
-							className="w-full border border-teal-500 rounded-md p-2 text-juan placeholder:text-teal-500"
+							className="w-full border border-teal-500 rounded-md p-2 text-teal-500 placeholder:text-teal-500"
 							value={prodeName}
 							onChange={handleProdeNameInput}
 						></input>
@@ -97,17 +118,18 @@ export default function NewProde() {
 							</p>
 						}
 					</div>
-					<div className="flex flex-row gap-x-1 items-baseline">
+					{/* <div className="flex flex-row gap-x-1 items-baseline">
 						<h2 className="text-teal-500 text-md">
-							Esta disponible el nombre:{" "}
+							{}
+
 						</h2>
 						<p className="max-w-fit text-black text-lg underline">
 							{"nombre disponible"}
 						</p>
-					</div>
+					</div> */}
 				</div>
 				<div className="mb-4">
-					<p className="line-clamp-2 text-red-500 text-sm p-1">
+					<p className="line-clamp-2 text-red-500 text-sm p-1 text-center">
 						{createProdeError}
 					</p>
 					<button
