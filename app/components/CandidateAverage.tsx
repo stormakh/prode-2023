@@ -1,29 +1,51 @@
-import { CandidateType } from "@/models/candidate";
-import Image from "next/image";
+import { CandidateType } from "@/models/candidate"
+import Image from "next/image"
+import { CandidateStatsType } from "../prode/[slug]/prode_stats"
 
+export default function CandidateAverage({
+  candidate,
+}: {
+  candidate: CandidateStatsType
+}) {
+  const votesToWidth =
+    candidate.vote !== undefined
+      ? candidate.vote.toString() + "%"
+      : candidate.initialVotes.toString() + "%"
 
-export default function CandidateAverage({Candidate} : {Candidate : CandidateType}){
-
-    const votesToWidth = Candidate.initialVotes.toString() + '%'
-   
-
-    return (
-        <div className="flex flex-row gap-x-2">
-            <div className="w-1/5 ">
-                <Image src={Candidate.ImageUrl} alt={Candidate.CandidateName} style={{maxWidth : '100%', height : 'auto'}}/>
-            </div>
-            <div className="flex flex-grow flex-col justify-around ">
-                <div className="flex flex-row justify-between border-b" style={{color : Candidate.theme.color, borderColor : Candidate.theme.color}}>
-                    <h1 className="text-black font-semibold text-xl">{Candidate.CandidateName}</h1>
-                    <h1 className=" text-2xl">{Candidate.initialVotes} %</h1>
-                </div>
-                <div className=" ">
-                        <div className=" mb-5 h-3 rounded-full bg-gray-200">
-                            <div className="h-3 rounded-full " style={{width : votesToWidth, backgroundColor : Candidate.theme.color}}></div>
-                        </div>
-                </div>
-                
-            </div>
+  return (
+    <div className="flex flex-row gap-x-2">
+      <div className="w-1/5 ">
+        <Image
+          src={candidate.imageUrl}
+          alt={candidate.candidateName}
+          style={{ maxWidth: "100%", height: "auto" }}
+        />
+      </div>
+      <div className="flex flex-grow flex-col justify-around ">
+        <div
+          className="flex flex-row justify-between border-b"
+          style={{
+            color: candidate.theme.color,
+            borderColor: candidate.theme.color,
+          }}
+        >
+          <h1 className="text-black font-semibold text-xl">
+            {candidate.candidateName}
+          </h1>
+          <h1 className=" text-2xl">{candidate.vote} %</h1>
         </div>
-    )
+        <div className=" ">
+          <div className=" mb-5 h-3 rounded-full bg-gray-200">
+            <div
+              className="h-3 rounded-full "
+              style={{
+                width: votesToWidth,
+                backgroundColor: candidate.theme.color,
+              }}
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
 }

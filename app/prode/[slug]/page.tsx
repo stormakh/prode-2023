@@ -7,6 +7,8 @@ import { useAuth } from "../../contexts/AuthContext"
 import { createVote, getVote } from "@/utils/api/votes"
 import ProdeStats from "./prode_stats"
 import InputVote from "./input_vote"
+import { getProde } from "@/utils/api/prodes"
+import { GetProdeResponseDto } from "@/models/prode"
 
 type VoteType = {
   candidateId: number
@@ -41,9 +43,8 @@ initialCandidateVote.forEach((candidate, index) => {
 })
 
 export default function ProdeDetails({ params }: { params: { slug: string } }) {
-  const [showProdeStats,setShowProdeStats] = useState<boolean>(false)
-  const [vote, setVote] = useState<VoteType[]>(initialCandidateVote)
-  const [errorMessage, setErrorMessage] = useState<string>("")
+  const [showProdeStats, setShowProdeStats] = useState<boolean>(false)
+  const [prode, setProde] = useState<GetProdeResponseDto | undefined>(undefined)
   const { firebaseUser } = useAuth()
 
   useEffect(() => {
@@ -52,26 +53,32 @@ export default function ProdeDetails({ params }: { params: { slug: string } }) {
     console.log("TODO ALERT: CHECK IF PRODE EXISTS & IF USER HAS VOTED")
     const getVoteAsync = async () => {
       if (!firebaseUser) return
+      const prode = await getProde(params.slug)
       const vote = await getVote(params.slug, firebaseUser.uid)
-      if(vote){
+      console.log("PRODE CHECK:", prode)
+      if (prode) {
+        setProde(prode)
+      }
+      if (vote) {
         setShowProdeStats(true)
       }
       console.log("INITIAL VOTE CHECK:", vote)
-      
     }
     getVoteAsync()
   }, [firebaseUser])
 
-
-
   return (
     <main className="">
-      <Navbar />
-      {showProdeStats ? <ProdeStats/> : <InputVote params={{
-        slug: params.slug
-      }}/>}
-
-      
+      {showProdeStats ? (
+        <ProdeStats params={{ prode, slug: params.slug }} />
+      ) : (
+        <InputVote
+          params={{
+            slug: params.slug,
+            setShowProdeStats: setShowProdeStats,
+          }}
+        />
+      )}
     </main>
   )
 }
