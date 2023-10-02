@@ -1,13 +1,26 @@
-import { addDoc, collection, doc, getDoc, setDoc } from "@firebase/firestore";
+import {
+	addDoc,
+	collection,
+	doc,
+	getDoc,
+	getDocs,
+	setDoc,
+} from "@firebase/firestore";
 import db from "../db";
 import {
 	DB_PRODES_COLLECTION_NAME,
 	DB_USERS_COLLECTION_NAME,
 	DB_USERS_PRODES_COLLECTION_NAME,
+	DB_VOTES_COLLECTION_NAME,
 } from "../db/constants";
 import { createUser } from "./users";
 import { CreateUserRequestDto } from "@/models/user";
 import { User } from "@firebase/auth";
+import {
+	CreateProdeRequestDto,
+	GetFullProdeResponseDto,
+	GetProdeResponseDto,
+} from "@/models/prode";
 
 export async function createProde(
 	prode: CreateProdeRequestDto,
@@ -24,6 +37,7 @@ export async function createProde(
 			collection(db, DB_PRODES_COLLECTION_NAME),
 			prodeModel.slug
 		);
+		// Check if prode exists
 		const userDoc = doc(
 			collection(db, DB_USERS_COLLECTION_NAME),
 			prodeModel.owner
@@ -58,5 +72,45 @@ export async function createProde(
 		console.log(prodeUserRes);
 	} catch (e) {
 		console.error(e);
+		throw e;
+	}
+}
+
+export async function getProde(slug: string): Promise<GetProdeResponseDto> {
+	try {
+		const prodeDoc = doc(collection(db, DB_PRODES_COLLECTION_NAME), slug);
+		const prodeRes = await getDoc(prodeDoc);
+		if (!prodeRes.exists()) {
+			throw new Error("Prode not found");
+		}
+		const prode = prodeRes.data() as GetProdeResponseDto;
+		return prode;
+	} catch (e) {
+		console.error(e);
+		throw e;
+	}
+}
+
+export async function getFullProde(
+	slug: string
+): Promise<GetFullProdeResponseDto> {
+	try {
+		const smallProde: GetProdeResponseDto = await getProde(slug);
+		const prodeVotesCollection = collection(
+			db,
+			DB_PRODES_COLLECTION_NAME,
+			slug,
+			DB_VOTES_COLLECTION_NAME
+		);
+		const votes = await getDocs(prodeVotesCollection);
+		const prodeVotes = votes.docs.map((vote) => vote.data());
+		const fullProde = {
+			...smallProde,
+			votes: prodeVotes,
+		};
+		return fullProde as GetFullProdeResponseDto;
+	} catch (e) {
+		console.error(e);
+		throw e;
 	}
 }

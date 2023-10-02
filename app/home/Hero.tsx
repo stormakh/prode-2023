@@ -103,7 +103,7 @@ export default function Hero() {
 						</p>
 						<div className="mt-10 flex flex-wrap items-center justify-center gap-x-12">
 							<a
-								href="/new-prode"
+								href="/prode"
 								className="block w-full ml-10 mr-10 rounded-md bg-teal-500 px-3.5 py-2.5 text-xl font-semibold text-white shadow-sm hover:bg-teal-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-500"
 							>
 								<div>Crea tu Prode</div>
