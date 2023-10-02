@@ -5,6 +5,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { z } from "zod";
 import { useEffect, useState } from "react";
 import { createProde } from "@/utils/api/prodes";
+import { CreateProdeRequestDto } from "@/models/prode";
 
 type ProdeName = z.infer<typeof prodeNameSchema>;
 
@@ -49,6 +50,7 @@ export default function NewProde() {
 		};
 		const prode = await createProde(newProde, firebaseUser);
 		console.log(prode);
+
 		router.push(`/prode/${newProde.slug}`);
 	};
 

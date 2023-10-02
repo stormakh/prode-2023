@@ -3,25 +3,22 @@ import axios from "axios";
 import { useAuth } from "../contexts/AuthContext";
 import { createUser } from "@/utils/api/users";
 import { CreateUserRequestDto } from "@/models/user";
+import { useEffect, useState } from "react";
+import { GetProdeResponseDto } from "@/models/prode";
+import { getProde } from "@/utils/api/prodes";
 
 const UserPage = () => {
+	const [prode, setProde] = useState<GetProdeResponseDto | null>(null);
 	const { firebaseUser } = useAuth();
-	const handleClick = async () => {
-		const user: any = {
-			username: "John",
-			level: "initial",
-			uid: firebaseUser.uid,
+	console.log(firebaseUser);
+	useEffect(() => {
+		const getMyProde = async () => {
+			const res = await getProde("cami-capa");
+			setProde(res);
 		};
-
-		const apiRes = await createUser(user);
-
-		return apiRes;
-	};
-	return (
-		<main>
-			<button onClick={handleClick}>Create user</button>
-		</main>
-	);
+		getMyProde();
+	}, []);
+	return <main>{JSON.stringify(prode)}</main>;
 };
 
 export default UserPage;

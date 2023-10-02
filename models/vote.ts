@@ -1,16 +1,12 @@
 interface IVote {
-  voterUid: string;
-  createdAt: string;
-  modifiedAt: string;
-  votes: CandidateVotes;
+	voterUid: string;
+	createdAt: string;
+	modifiedAt: string;
+	votes: CandidateVotes;
 }
 
-
-type CreateVoteRequestDto = Omit<
-  IVote,
-  "createdAt" | "modifiedAt"
->;
+type CreateVoteRequestDto = Omit<IVote, "createdAt" | "modifiedAt">;
 
 type GetVoteResponseDto = IVote;
 
-export type { CreateVoteRequestDto, GetVoteResponseDto };
+export type { CreateVoteRequestDto, GetVoteResponseDto, IVote };
