@@ -1,16 +1,16 @@
 import { CandidateList } from "@/utils/candidateInfo/candidateList"
-import Navbar from "../components/Navbar"
-import CandidateAverage from "../components/CandidateAverage"
+import Navbar from "../../components/Navbar"
+import CandidateAverage from "../../components/CandidateAverage"
 
-import TablaVotantes from "../components/TablaVotantes"
-
-
+import TablaVotantes from "../../components/TablaVotantes"
 
 
 
 
 
-export default function Dashboard(){
+
+
+export default function ProdeStats(){
     return (
         <>
         <Navbar/>
