@@ -1,6 +1,5 @@
 'use client'
-import Error from "next/error";
-import { CSSProperties, Dispatch, SetStateAction, useEffect, useState } from "react";
+import { CSSProperties, Dispatch, SetStateAction, useState } from "react";
 
 type voteDouble = {
     big : number,
@@ -13,7 +12,10 @@ const enum numberPart {
 }
 
 export default function ScrollerFixed({theme, votes,candidateId, initialVotes} : {theme : CSSProperties, votes : (candidateId : number, voteValue : number)=> void, candidateId : number, initialVotes : number}) {
-    const [currentSelected, setCurrentSelected] = useState<voteDouble>({big: initialVotes-(initialVotes%1), small: (initialVotes%1)*10});
+    
+    
+    
+    const [currentSelected, setCurrentSelected] = useState<voteDouble>({big: initialVotes-(initialVotes%1), small: ((initialVotes%1)*100)});
     
     const handlePlusButton = (setter : Dispatch<SetStateAction<voteDouble>>, numberPart : numberPart) => {
         

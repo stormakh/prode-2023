@@ -31,7 +31,7 @@ export  const CandidateList : CandidateType[] = [
       CandidateName: "Javier Milei",
       ImageUrl: Icono_Milei,
       theme: mileiTheme,
-      initialVotes : 32.5,
+      initialVotes : 32.05,
       id : 1,
     },
     {
