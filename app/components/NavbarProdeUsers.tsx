@@ -1,15 +1,21 @@
 import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { MdExpandMore } from 'react-icons/md'
+import { useAuth } from '../contexts/AuthContext'
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
 export default function NavbarProdeUsers() {
+
+ 
+  
+  
+
   return (
     <Menu as="div" className="relative inline-block text-left">
-      <div>
+       <div>
         <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-juan px-3 py-1 text-sm font-semibold text-whit">
           Prode 
           <MdExpandMore className="-mr-1 h-5 w-5 text-gray-400" aria-hidden="true" />

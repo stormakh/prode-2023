@@ -35,7 +35,7 @@ export const CandidateList: CandidateType[] = [
     candidateIdentifier: "Bullrich",
     imageUrl: Icono_Bullrich,
     theme: patoTheme,
-    initialVotes: 27.6,
+    initialVotes: 27.95,
     id: 2,
   },
   {

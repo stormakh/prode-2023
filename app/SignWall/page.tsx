@@ -10,13 +10,20 @@ import { useRouter } from "next/navigation";
 
 
 
-export default function SignWall() {
+export default function SignWall({cameFromVoteInput} : {cameFromVoteInput?: string}) {
     const { signInWithGoogle, firebaseUser } = useAuth();
     const router = useRouter();
+    console.log((firebaseUser ? firebaseUser.uid : 'no user ') + ' firebaseUser in signwall');
 
     useEffect(() => {
-        if(firebaseUser) {
-            router.push('/home');
+        if(firebaseUser && !firebaseUser.isAnonymous) {
+            if(cameFromVoteInput){
+                router.push('/prode/'+cameFromVoteInput);
+            }
+            else{
+                router.push('/home');
+            }
+            
         }
     }, [firebaseUser])
 

@@ -108,3 +108,17 @@
     transform: translateX(-55px);
     pointer-events: none;
   }
+
+
+  .spin{
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin{
+    0%{
+      transform: rotate(0deg);
+    }
+    100%{
+      transform: rotate(360deg);
+    }
+  }

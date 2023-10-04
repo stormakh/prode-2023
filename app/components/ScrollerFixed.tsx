@@ -1,6 +1,8 @@
 'use client'
 import { CSSProperties, Dispatch, SetStateAction, useState } from "react";
 
+
+
 type voteDouble = {
     big : number,
     small : number,
@@ -14,12 +16,15 @@ const enum numberPart {
 export default function ScrollerFixed({theme, votes,candidateId, initialVotes} : {theme : CSSProperties, votes : (candidateId : number, voteValue : number)=> void, candidateId : number, initialVotes : number}) {
     
     
-    
-    const [currentSelected, setCurrentSelected] = useState<voteDouble>({big: initialVotes-(initialVotes%1), small: ((initialVotes%1)*100)});
+   
+    const [currentSelected, setCurrentSelected] = useState<voteDouble>({big: initialVotes-(initialVotes%1), small: Math.round((initialVotes-Math.floor(initialVotes))*100)});
     
     const handlePlusButton = (setter : Dispatch<SetStateAction<voteDouble>>, numberPart : numberPart) => {
         
         var newVoteValue = currentSelected.big + currentSelected.small/100;
+
+        
+        
         if(numberPart == "big"){
            newVoteValue = newVoteValue + 1;
         } else {
@@ -34,6 +39,7 @@ export default function ScrollerFixed({theme, votes,candidateId, initialVotes} :
             else {
                 if(currentSelected.small == 99)
                 {
+                    console.log("small is 99");
                     return;
                 }
                 setter(prevState => ({...prevState, small: prevState.small + 1}));
