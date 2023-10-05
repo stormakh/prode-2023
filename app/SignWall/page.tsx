@@ -5,27 +5,27 @@ import NavbarVacia from "../components/NavbarVacia";
 import AnonimousBarForm from "../components/AnonimousBarForm";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useHistory } from "../contexts/HistoryContext";
 
 
 
 
 
-export default function SignWall({cameFromVoteInput} : {cameFromVoteInput?: string}) {
+export default function SignWall() {
     const { signInWithGoogle, firebaseUser } = useAuth();
+    const {backIfPreviosIsProde,history} = useHistory();
     const router = useRouter();
     
+    //chceck if previos page was /prode/[slug]/input_vote
+    console.log(history);
 
     useEffect(() => {
         if(firebaseUser && !firebaseUser.isAnonymous) {
-            if(cameFromVoteInput){
-                router.back();
+            backIfPreviosIsProde();
+
+            router.push('/dashboard');
             }
-            else{
-                router.push('/dashboard');
-            } 
-            
-        }
-    }, [firebaseUser])
+    }, [firebaseUser]);
 
 
     const handleSignInWithGoogle = () => {
