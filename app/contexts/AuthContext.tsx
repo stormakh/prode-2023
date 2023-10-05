@@ -2,15 +2,19 @@
 
 import auth from "@/utils/auth";
 import {
+
 	GoogleAuthProvider,
 	UserCredential,
+	linkWithCredential,
 	linkWithPopup,
 	onAuthStateChanged,
 	signInAnonymously,
+	signInWithCredential,
 	signInWithPopup,
 	signOut,
 } from "firebase/auth";
 import {
+	Dispatch,
 	SetStateAction,
 	createContext,
 	useContext,
@@ -20,11 +24,13 @@ import {
 } from "react";
 
 interface IAuthContext {
-	signInWithGoogle: () => Promise<UserCredential> | undefined;
+	signInWithGoogle: () => void;
 	logout: () => Promise<void>;
 	signInWithAnonymous: () => Promise<UserCredential>;
 	firebaseUser: any;
 	isAuthenticated: boolean;
+	setAnonUsername : Dispatch<SetStateAction<string | null>>;
+	AnonUsername : string | null;
 }
 
 export const AuthContext = createContext<IAuthContext | null>(null);
@@ -37,6 +43,8 @@ export default function AuthContextProvider({
 	// const [user, setUser] = useState<any>(null)
 	const [firebaseUser, setFirebaseUser] = useState<any>(null);
 	const [loading, setLoading] = useState(true);
+	const [AnonUsername, setAnonUsername] = useState<string | null>(null);
+	
 
 	const refreshAuth = async (_firebaseUser: any) => {
 		setLoading(true);
@@ -48,14 +56,30 @@ export default function AuthContextProvider({
 		setLoading(false);
 	};
 
+
+
+
 	const signInWithGoogle = () => {
 		const provider = new GoogleAuthProvider();
-		if (auth.currentUser) {
-			return linkWithPopup(auth.currentUser, provider);
-		} else {
-			return signInWithPopup(auth, provider);
+		if (auth.currentUser?.isAnonymous) {
+			linkWithPopup(auth.currentUser, provider).then((result) => {
+				
+				
+				setFirebaseUser({...result.user, providerId : result.providerId});
+				return result;
+			}).catch((error) => {
+				
+				if(error.code === 'auth/credential-already-in-use'){
+					const credential = GoogleAuthProvider.credentialFromError(error);
+					if(credential){
+						const userPromise = signInWithCredential(auth, credential);
+						setFirebaseUser(userPromise);
+						return userPromise;
+					}
+				}
+			});
+			
 		}
-		return;
 	};
 
 	const signInWithAnonymous = () => signInAnonymously(auth);
@@ -78,6 +102,8 @@ export default function AuthContextProvider({
 				signInWithAnonymous,
 				firebaseUser,
 				isAuthenticated,
+				setAnonUsername,
+				AnonUsername,
 			}}
 		>
 			{children}

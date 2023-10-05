@@ -1,5 +1,8 @@
 "use client";
+import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
+import { useAuth } from "../contexts/AuthContext";
 // import { Dialog } from '@headlessui/react'
 // import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 
@@ -12,7 +15,7 @@ const navigation = [
 
 export default function Hero() {
 	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
+	const { isAuthenticated, firebaseUser } = useAuth();
 	return (
 		<div className="bg-white">
 			<header className="absolute inset-x-0 top-0 z-50">
@@ -32,6 +35,8 @@ export default function Hero() {
 								className="h-8 w-auto"
 								src="/logo.png"
 								alt=""
+								
+											  
 							/>
 						</a>
 					</div>
@@ -56,14 +61,14 @@ export default function Hero() {
 							</a>
 						))}
 					</div>
-					<div className="hidden lg:flex lg:flex-1 lg:justify-end">
-						<a
-							href="#"
+					<div className=" lg:flex lg:flex-1 lg:justify-end">
+						<Link
+							href="/SignWall"
 							className="text-sm font-semibold leading-6 text-gray-900"
 						>
 							Ingresa a tu cuenta{" "}
 							<span aria-hidden="true">&rarr;</span>
-						</a>
+						</Link>
 					</div>
 				</nav>
 			</header>

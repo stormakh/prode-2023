@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Features() {
   return (
     <section>
@@ -15,12 +17,12 @@ export default function Features() {
               sea entretenido responder.
             </p>
 
-            <a
-              href="#"
+            <Link
+              href="/prode"
               className="mt-8 inline-block rounded bg-teal-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-teal-700 focus:outline-none focus:ring focus:ring-yellow-400"
             >
               Crea tu Prode Ya
-            </a>
+            </Link>
           </div>
 
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">

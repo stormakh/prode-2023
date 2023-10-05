@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useMemo, useState } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { FaSpinner } from 'react-icons/fa'
 import {RiUserForbidLine} from 'react-icons/ri'
@@ -16,28 +16,36 @@ function classNames(...classes: string[]) {
 
 export default function NavbarProdeUsers() {
    
-    const {firebaseUser} = useAuth();
+    const {firebaseUser, logout, AnonUsername} = useAuth();
     
-    function userPopup(){
-        if(firebaseUser){
-            if(firebaseUser.isAnonymous){
-                return <PopUpAnon/>
-            }else{
-                return <PopUpUser/>
-            }
-        }   
-    }
+    const userPopup = useMemo(() => {
+      
+      if(firebaseUser){
+        if(firebaseUser.isAnonymous){
+            return <PopUpAnon/>
+        }else{
+            return <PopUpUser/>
+        }
+    }}, [firebaseUser])
+
 
     function userDisplayName(){ //me devuelve las iniciales o un icono de anonimo
         if(firebaseUser){
             if(firebaseUser.isAnonymous){
                 return <RiUserForbidLine size={'18px'} />
-        }else{
+            }
             //only grab the initials
-            return firebaseUser.displayName.split(' ').map((n : any)=>n[0]).join('')
+            if(firebaseUser.displayName ){
+              return firebaseUser.displayName.split(' ').map((n : any)=>n[0]).join('')
+            }
+            if(firebaseUser.email){
+              return firebaseUser.email.split('@')[0][0] + firebaseUser.email.split('@')[0][1]
+            }
         }
-        }
-    }
+        return <FaSpinner className='spin' size={'18px'} />
+      }
+        
+    
 
     function PopUpAnon(){
         return(
@@ -62,7 +70,7 @@ export default function NavbarProdeUsers() {
                         'block px-4 py-2 text-sm line-clamp-2'
                       )}
                     >
-                      Signed in as <br></br><b>Anonymous User</b>
+                      {AnonUsername ? 'Logged in as ' + AnonUsername : 'You are NOT logged in'}   
                     </a>
                   )}
                 </Menu.Item>
@@ -88,50 +96,48 @@ export default function NavbarProdeUsers() {
 
     function PopUpUser(){
         return(
-            <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-              <div className="py-1">
-                <Menu.Item>
-                  {({ active }) => (
-                    <a
-                      href="#"
-                      className={classNames(
-                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                        'block px-4 py-2 text-sm'
-                      )}
-                    >
-                      Account settings
-                    </a>
+          <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+          <div className="py-0">
+            <Menu.Item>
+              {({ active }) => (
+                <div
+                  
+                  className='bg-juan text-white block px-4 py-1 text-xl first-letter:text-2xl font-bold text-right rounded-md rounded-b-none'
+                >
+                    {userDisplayName()}
+                </div>
+              )}
+            </Menu.Item>
+            <Menu.Item>
+              {({ active }) => (
+                <a
+                  
+                  className={classNames(
+                     'text-black text-right',
+                    'block px-4 py-2 text-sm line-clamp-2 border-b'
                   )}
-                </Menu.Item>
-                <Menu.Item>
-                  {({ active }) => (
-                    <a
-                      href="#"
-                      className={classNames(
-                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                        'block px-4 py-2 text-sm'
-                      )}
-                    >
-                      Support
-                    </a>
+                >
+                  Signed in as <br></br><b>{firebaseUser.email}</b>
+                </a>
+              )}
+            </Menu.Item>
+            <Menu.Item>
+              {({ active }) => (
+                <Link
+                  href={'/home'}
+                  className={classNames(
+                    active ? 'bg-gray-100 text-teal-500' : 'text-black',
+                    'block px-4 py-2 text-md text-right font-bold'
                   )}
-                </Menu.Item>
-                <Menu.Item>
-                  {({ active }) => (
-                    <a
-                      href="#"
-                      className={classNames(
-                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                        'block px-4 py-2 text-sm'
-                      )}
-                    >
-                      License
-                    </a>
-                  )}
-                </Menu.Item>
-                
-              </div>
-            </Menu.Items>
+                  onClick={logout}
+                >
+                  Logout
+                </Link>
+              )}
+            </Menu.Item>
+            
+          </div>
+        </Menu.Items>
         )
     
     }
@@ -142,8 +148,8 @@ export default function NavbarProdeUsers() {
 
     <Menu as="div" className="relative inline-block text-left">
       <div>
-        <Menu.Button className="inline-flex w-full  justify-center gap-x-1.5 rounded-md bg-juan px-3 py-1 text-sm font-semibold text-whit">
-         { userDisplayName() ? userDisplayName() : <FaSpinner className='spin' size={'18px'} />}
+        <Menu.Button className="inline-flex w-8 h-8 items-center justify-center gap-x-1.5 rounded-full bg-juan px-1 py-1 text-sm font-semibold text-white">
+         { userDisplayName()}
           
         </Menu.Button>
       </div>
@@ -158,7 +164,7 @@ export default function NavbarProdeUsers() {
         leaveTo="transform opacity-0 scale-95"
       >
             <div>
-                {userPopup()? userPopup() : null}
+                {userPopup}
             </div>
         
       </Transition>

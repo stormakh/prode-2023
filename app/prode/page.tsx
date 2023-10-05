@@ -107,7 +107,7 @@ export default function NewProde() {
 					<div>
 						<input
 							type="text"
-							placeholder="Prode Familia Fernadez..."
+							placeholder="Ej : Prode Familia Fernadez..."
 							className="w-full border border-teal-500 rounded-md p-2 text-teal-500 placeholder:text-teal-500"
 							value={prodeName}
 							onChange={handleProdeNameInput}
