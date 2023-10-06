@@ -31,7 +31,7 @@ const [history, setHistory] = useState<string[]>([])
 //   }
      //check if router has a new path
     const currentPath = usePathname();
-    console.log(currentPath + "<-  currnet path is  " + history[history.length-1])
+    
     useEffect(() => {
         if(history[history.length-1] != currentPath){
             setHistory([...history, currentPath])

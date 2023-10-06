@@ -96,10 +96,11 @@ export default function InputVote({
   }
 
   async function handleClickUploadResults() {
-    if (totalVotes !== "100.00") {
+    if (totalVotes !== '100.00') {
       setErrorMessage("Tus votos NO suman 100%")
+      return;
     }
-
+    
     setErrorMessage("")
 
     const votes: Record<string, number> = {}
@@ -165,7 +166,7 @@ export default function InputVote({
       <div className="sticky bottom-0   w-full rounded-none  justify-center items-center font-bold text-teal-500 bg-juan p-2 mt-24">
         <p>{"Tus votos totales son :" + totalVotes + "%"}</p>
       </div>
-      <div className="text line-clamp-2 text-red-500 text-sm p-1">
+      <div className="text-center line-clamp-2 text-red-500 text-xl font-bold p-1">
         {errorMessage}
       </div>
       <div className="flex w-full  justify-center items-center font-bold text-white p-2 mt-24">

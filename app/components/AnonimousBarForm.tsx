@@ -10,7 +10,7 @@ export default function AnonimousBarForm() {
     function handleSubmit(e : any){
         e.preventDefault();
         setAnonUsername(e.target[0].value);
-        router.back();
+        router.push('/dashboard');
     }
 
     return (

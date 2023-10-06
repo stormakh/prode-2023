@@ -136,7 +136,7 @@ export default function NewProde() {
 						className="w-full bg-teal-500 text-white rounded-md font-bold p-2"
 						onClick={handleCreateProde}
 					>
-						Comparti
+						Crear
 					</button>
 					{
 						!isAuthenticated ? (

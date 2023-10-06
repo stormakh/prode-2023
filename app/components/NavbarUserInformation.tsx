@@ -57,7 +57,7 @@ export default function NavbarProdeUsers() {
                       
                       className='bg-juan text-white block px-4 py-1 text-xl first-letter:text-2xl font-bold text-right rounded-md rounded-b-none'
                     >
-                        Anon
+                        {AnonUsername? AnonUsername : 'Anonimo'}
                     </div>
                   )}
                 </Menu.Item>
@@ -70,7 +70,8 @@ export default function NavbarProdeUsers() {
                         'block px-4 py-2 text-sm line-clamp-2'
                       )}
                     >
-                      {AnonUsername ? 'Logged in as ' + AnonUsername : 'You are NOT logged in'}   
+                      
+                      {AnonUsername ? 'Logged in as ' : 'You are NOT logged in'}{AnonUsername? <b>{AnonUsername}</b> : ''}
                     </a>
                   )}
                 </Menu.Item>
@@ -83,7 +84,7 @@ export default function NavbarProdeUsers() {
                         'block px-4 py-2 text-md text-right font-bold'
                       )}
                     >
-                      Register
+                      Registrate con Google
                     </Link>
                   )}
                 </Menu.Item>

@@ -124,3 +124,22 @@ export async function getFullProde(
     throw e
   }
 }
+
+export async function getAllUserProdesFull(
+  uid: string
+): Promise<GetProdeResponseDto[]> {
+  try {
+    const prodesRef = collection(
+      db,
+      DB_USERS_COLLECTION_NAME,
+      uid,
+      DB_USERS_PRODES_COLLECTION_NAME
+    )
+    const prodesRes = await getDocs(prodesRef)
+    const prodes = prodesRes.docs.map((prode) => prode.data())
+    return prodes as GetProdeResponseDto[]
+  } catch (e) {
+    console.error(e)
+    throw e
+  }
+}

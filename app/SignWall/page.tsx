@@ -15,9 +15,7 @@ export default function SignWall() {
     const { signInWithGoogle, firebaseUser } = useAuth();
     const {backIfPreviosIsProde,history} = useHistory();
     const router = useRouter();
-    
-    //chceck if previos page was /prode/[slug]/input_vote
-    console.log(history);
+
 
     useEffect(() => {
         if(firebaseUser && !firebaseUser.isAnonymous) {
