@@ -6,6 +6,7 @@ import { z } from "zod";
 import { useEffect, useState } from "react";
 import { createProde } from "@/utils/api/prodes";
 import { CreateProdeRequestDto } from "@/models/prode";
+import Navbar from "../components/Navbar";
 
 type ProdeName = z.infer<typeof prodeNameSchema>;
 
@@ -94,10 +95,37 @@ export default function NewProde() {
 	const [prodeNameError, setProdeNameError] = useState<string>("");
 	const [createProdeError, setCreateProdeError] = useState<string>("");
 
+
+	function CrearProdeBtn() {
+		return(
+			<>
+			<button
+						className="w-full bg-teal-500 text-white rounded-md font-bold p-2"
+						onClick={handleCreateProde}
+					>
+						Crear
+			</button>
+			</>
+		)	
+	}
+
+	function CrearProdeBtnDisabled() {
+		return(
+			<>
+			<button
+						className="w-full bg-teal-500 text-white rounded-md font-bold p-2 opacity-50 cursor-not-allowed"
+						disabled
+					>
+						Crear
+			</button>
+			</>
+		)	
+	}
+
 	return (
 		<div className=" min-h-screen flex flex-col">
-			<NavbarVacia />
-			<div className="p-2 flex flex-col justify-between flex-grow">
+			<Navbar  />
+			<div className="p-2 flex flex-col justify-between items-stretch">
 				<div className="flex flex-col gap-y-3">
 					<div className="w-full border-b border-teal-500">
 						<h1 className="font-bold text-3xl text-teal-500">
@@ -107,7 +135,7 @@ export default function NewProde() {
 					<div>
 						<input
 							type="text"
-							placeholder="Ej : Prode Familia Fernadez..."
+							placeholder="Ej : Prode Familia..."
 							className="w-full border border-teal-500 rounded-md p-2 text-teal-500 placeholder:text-teal-500"
 							value={prodeName}
 							onChange={handleProdeNameInput}
@@ -132,18 +160,16 @@ export default function NewProde() {
 					<p className="line-clamp-2 text-red-500 text-sm p-1 text-center">
 						{createProdeError}
 					</p>
-					<button
-						className="w-full bg-teal-500 text-white rounded-md font-bold p-2"
-						onClick={handleCreateProde}
-					>
-						Crear
-					</button>
+					
 					{
-						!isAuthenticated ? (
-							<p className="text-grey-200">
-								Debes estar registrado para crear un prode{" "}
-							</p>
-						) : null
+						firebaseUser?.isAnonymous ? (
+							<>
+								<CrearProdeBtnDisabled/>
+								<p className="text-grey-200">
+									Debes estar registrado CON GOOGLE para crear un prode{" "}
+								</p>
+							</>
+						) : <CrearProdeBtn/>
 						//agregar mensaje de que tiene que estar registrado para crear un prode
 					}
 				</div>
