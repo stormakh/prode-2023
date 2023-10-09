@@ -2,6 +2,7 @@
 
 import { createUser } from "@/utils/api/users";
 import auth from "@/utils/auth";
+import { FirebaseError } from "firebase/app";
 import {
 	GoogleAuthProvider,
 	UserCredential,
@@ -56,31 +57,38 @@ export default function AuthContextProvider({
 		setLoading(false);
 	};
 
-	const signInWithGoogle = () => {
+	const signInWithGoogle = async () => {
 		const provider = new GoogleAuthProvider();
 		if (auth.currentUser?.isAnonymous) {
-			linkWithPopup(auth.currentUser, provider)
-				.then((result) => {
-					setFirebaseUser({
-						...result.user,
-						providerId: result.providerId,
-					});
-					return result;
-				})
-				.catch((error) => {
-					if (error.code === "auth/credential-already-in-use") {
-						const credential =
-							GoogleAuthProvider.credentialFromError(error);
-						if (credential) {
-							const userPromise = signInWithCredential(
-								auth,
-								credential
-							);
-							setFirebaseUser(userPromise);
-							return userPromise;
-						}
-					}
+			try {
+				const result = await linkWithPopup(auth.currentUser, provider);
+
+				const createUserDto: any = {
+					displayName: firebaseUser.displayName,
+					email: firebaseUser.email,
+					photoUrl: firebaseUser.photoURL,
+					uid: firebaseUser.uid,
+				};
+				const userCreated = await createUser(createUserDto);
+				console.log(userCreated);
+				setFirebaseUser({
+					...result.user,
 				});
+				return result;
+			} catch (error: any) {
+				if (error.code === "auth/credential-already-in-use") {
+					const credential =
+						GoogleAuthProvider.credentialFromError(error);
+					if (credential) {
+						const userPromise = signInWithCredential(
+							auth,
+							credential
+						);
+						setFirebaseUser(userPromise);
+						return userPromise;
+					}
+				}
+			}
 		}
 	};
 
