@@ -6,7 +6,9 @@ import CandidateAverage from "../../components/CandidateAverage"
 import TablaVotantes from "../../components/TablaVotantes"
 import { GetFullProdeResponseDto, GetProdeResponseDto } from "@/models/prode"
 import { getFullProde } from "@/utils/api/prodes"
-
+import Link from "next/link"
+import { CgLink } from "react-icons/cg"
+import { FaRegCopy } from "react-icons/fa"
 export type CandidateStatsType = CandidateType & { vote?: number }
 export default function ProdeStats({
   params,
@@ -18,6 +20,16 @@ export default function ProdeStats({
   const [fullProde, setFullProde] = useState<
     GetFullProdeResponseDto | undefined
   >(undefined)
+
+  function handleCopyShareLink(link : string) {
+    try{
+      navigator.clipboard.writeText(link)
+    }catch(err){
+      console.log(err)
+    }
+    
+  }
+
   useEffect(() => {
     const localCandidateStats: CandidateStatsType[] = []
     CandidateList.forEach((candidate) => {
@@ -46,11 +58,21 @@ export default function ProdeStats({
           })}
         </div>
       </div>
-      <div className="flex flex-col justify-center w-full p-4 gap-y-20">
+      <div className="flex flex-col justify-center w-full p-4 gap-y-10">
         <TablaVotantes votesList={fullProde?.votes || []} />
-        <button className="bg-teal-500 text-white font-bold p-2 rounded-md text-2xl">
+        <Link href={'/prode'} className="bg-teal-500 text-white font-bold p-2 rounded-md text-2xl text-center">
           Crea el tuyo
-        </button>
+        </Link>
+        <div className="flex flex-col justify-center items-center gap-y-2">
+          <h2 className="w-4/5 text-2xl text-center font-bold border-b border-teal-500 text-teal-500">Compartilo</h2>
+          <div className="w-full inline-flex justify-center items-center h-10 max-h-fit">
+              <div className="inline-flex items-center w-4/5 h-10 border-dashed border-r-0 border-teal-500 border-2 rounded-md rounded-r-none border-opacity-70">
+                <CgLink className="text-lg text-teal-500 w-1/6 h-2/3 max-w-fit" />
+                <p className="line-clamp-1">{`https://www.prodearg.com/prode/${params.slug}`}</p>      
+              </div>
+              <button onClick={e => handleCopyShareLink(`https://www.prodearg.com/prode/${params.slug}`)} className="text-lg text-white bg-teal-500 rounded-md w-1/5 h-10 max-w-fit rounded-l-none p-3 hover:text-teal-500 hover:bg-juan hover:border"><FaRegCopy   className="" /></button>
+          </div>
+        </div>
       </div>
     </>
   )
