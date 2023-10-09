@@ -1,27 +1,35 @@
 interface IUser {
-  uid: string;
-  level: Level;
-  createdAt: string;
-  modifiedAt: string;
+	uid: string;
+	level: Level;
+	createdAt: string;
+	modifiedAt: string;
 }
 
 interface IAnonymousUser extends IUser {
-  username: string;
+	username: string;
 }
 
 interface IAuthenticatedUser extends IUser {
-  displayName: string;
-  email: string;
-  photoUrl: string;
+	displayName: string;
+	email: string;
+	photoUrl: string;
 }
 
 type Level = "initial";
 
 type CreateUserRequestDto = Omit<
-  IAuthenticatedUser | IAnonymousUser,
-  "createdAt" | "modifiedAt"
+	IAuthenticatedUser,
+	"createdAt" | "modifiedAt"
+>;
+type CreateAnonUserRequestDto = Omit<
+	IAnonymousUser,
+	"createdAt" | "modifiedAt"
 >;
 
 type GetUserResponseDto = IAuthenticatedUser | IAnonymousUser;
 
-export type { CreateUserRequestDto, GetUserResponseDto };
+export type {
+	CreateUserRequestDto,
+	CreateAnonUserRequestDto,
+	GetUserResponseDto,
+};

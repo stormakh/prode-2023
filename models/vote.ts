@@ -2,6 +2,7 @@ interface IVote {
 	voterUid: string;
 	createdAt: string;
 	modifiedAt: string;
+	voterDisplayName: string;
 	votes: CandidateVotes;
 }
 

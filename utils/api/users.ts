@@ -1,10 +1,14 @@
-import { CreateUserRequestDto, GetUserResponseDto } from "@/models/user";
+import {
+	CreateAnonUserRequestDto,
+	CreateUserRequestDto,
+	GetUserResponseDto,
+} from "@/models/user";
 import { DB_USERS_COLLECTION_NAME } from "../db/constants";
 import db from "../db";
 import { collection, doc, getDoc, setDoc } from "@firebase/firestore";
 
 export async function createUser(
-	createUserReq: CreateUserRequestDto
+	createUserReq: CreateUserRequestDto | CreateAnonUserRequestDto
 ): Promise<void> {
 	const userModel = {
 		...createUserReq,
@@ -21,17 +25,17 @@ export async function createUser(
 }
 
 export async function getUserByID(uid: string): Promise<any> {
-  const userRef = doc(collection(db, DB_USERS_COLLECTION_NAME), uid);
-  const userSnap = await getDoc(userRef);
+	const userRef = doc(collection(db, DB_USERS_COLLECTION_NAME), uid);
+	const userSnap = await getDoc(userRef);
 
-  if (userSnap.exists()) {
-    const userData = userSnap.data();
-    return {
-      displayName: userData.displayName,
-      email: userData.email,
-    };
-  } else {
-    console.log('No such user!');
-    return null;
-  }
+	if (userSnap.exists()) {
+		const userData = userSnap.data();
+		return {
+			displayName: userData.displayName,
+			email: userData.email,
+		};
+	} else {
+		console.log("No such user!");
+		return null;
+	}
 }

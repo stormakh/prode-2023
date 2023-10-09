@@ -1,8 +1,8 @@
 "use client";
 
+import { createUser } from "@/utils/api/users";
 import auth from "@/utils/auth";
 import {
-
 	GoogleAuthProvider,
 	UserCredential,
 	linkWithCredential,
@@ -29,8 +29,9 @@ interface IAuthContext {
 	signInWithAnonymous: () => Promise<UserCredential>;
 	firebaseUser: any;
 	isAuthenticated: boolean;
-	setAnonUsername : Dispatch<SetStateAction<string | null>>;
-	AnonUsername : string | null;
+	// setAnonUsername: Dispatch<SetStateAction<string | null>>;
+	createAnonymousUser: (username: string) => Promise<void>;
+	AnonUsername: string | null;
 }
 
 export const AuthContext = createContext<IAuthContext | null>(null);
@@ -44,7 +45,6 @@ export default function AuthContextProvider({
 	const [firebaseUser, setFirebaseUser] = useState<any>(null);
 	const [loading, setLoading] = useState(true);
 	const [AnonUsername, setAnonUsername] = useState<string | null>(null);
-	
 
 	const refreshAuth = async (_firebaseUser: any) => {
 		setLoading(true);
@@ -56,29 +56,31 @@ export default function AuthContextProvider({
 		setLoading(false);
 	};
 
-
-
-
 	const signInWithGoogle = () => {
 		const provider = new GoogleAuthProvider();
 		if (auth.currentUser?.isAnonymous) {
-			linkWithPopup(auth.currentUser, provider).then((result) => {
-				
-				
-				setFirebaseUser({...result.user, providerId : result.providerId});
-				return result;
-			}).catch((error) => {
-				
-				if(error.code === 'auth/credential-already-in-use'){
-					const credential = GoogleAuthProvider.credentialFromError(error);
-					if(credential){
-						const userPromise = signInWithCredential(auth, credential);
-						setFirebaseUser(userPromise);
-						return userPromise;
+			linkWithPopup(auth.currentUser, provider)
+				.then((result) => {
+					setFirebaseUser({
+						...result.user,
+						providerId: result.providerId,
+					});
+					return result;
+				})
+				.catch((error) => {
+					if (error.code === "auth/credential-already-in-use") {
+						const credential =
+							GoogleAuthProvider.credentialFromError(error);
+						if (credential) {
+							const userPromise = signInWithCredential(
+								auth,
+								credential
+							);
+							setFirebaseUser(userPromise);
+							return userPromise;
+						}
 					}
-				}
-			});
-			
+				});
 		}
 	};
 
@@ -91,8 +93,21 @@ export default function AuthContextProvider({
 	}, []);
 
 	const isAuthenticated = useMemo(() => {
-		return firebaseUser !== null} , [firebaseUser]);
-	
+		return firebaseUser !== null;
+	}, [firebaseUser]);
+
+	const createAnonymousUser = async (username: string) => {
+		const resp = await createUser({
+			username: username,
+			uid: firebaseUser.uid,
+			level: "initial",
+		});
+
+		setFirebaseUser({
+			...firebaseUser,
+			username: username,
+		});
+	};
 
 	return (
 		<AuthContext.Provider
@@ -102,7 +117,7 @@ export default function AuthContextProvider({
 				signInWithAnonymous,
 				firebaseUser,
 				isAuthenticated,
-				setAnonUsername,
+				createAnonymousUser,
 				AnonUsername,
 			}}
 		>

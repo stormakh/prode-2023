@@ -135,6 +135,8 @@ export default function InputVote({
 			{
 				voterUid: firebaseUser.uid,
 				votes: votes as CandidateVotes,
+				voterDisplayName:
+					firebaseUser?.username ?? firebaseUser?.displayName,
 			},
 			params.slug
 		).then(() => {
@@ -163,12 +165,12 @@ export default function InputVote({
 							: params.slug}
 					</h2>
 					<p className="font-bold p-1">
-						Elegi los porcentajes que crees que cada uno de los
+						Elegí los porcentajes que crees que cada uno de los
 						candidatos va a sacar en las elecciones para presidente
 						del 2023.
 					</p>
 					<p className="font-bold border-b-1/2 p-2  border-teal-500">
-						Juga y comparti con tus amigos!
+						Jugá y compartí con tus amigos!
 					</p>
 
 					<div className="flex flex-col md:flex-wrap md:flex-row gap-4">
