@@ -62,15 +62,15 @@ export default function ProdeDetails({ params }: { params: { slug: string } }) {
       const prodeRes = await getProde(params.slug);
       setProde(prodeRes)
       console.log("PRODE CHECK:", prodeRes)
-      if (hasVoted == 'true') {
-        console.log("HAS VOTED:", hasVoted)
+      if (hasVoted.exists == true) {
+        
         setShowProdeStats(true)
       }else {
-        console.log("HAS VOTED:", hasVoted)
+       
         setShowProdeStats(false)
       }
 
-      console.log("INITIAL VOTE CHECK:", hasVoted)
+      
     }
     getVoteAsync()
   }, [firebaseUser])

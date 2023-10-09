@@ -47,7 +47,7 @@ export default function ProdeStats({
   }, [params.prode, params.slug])
   return (
     <>
-      <Navbar />
+      <Navbar isEnabledCreaElTuyoBtn={true}/>
       <div className="p-4">
         <div className=" border-b-1/2 border-teal-500">
           <h1 className="text-teal-500 text-3xl font-bold">Promedio</h1>
