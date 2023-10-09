@@ -49,7 +49,7 @@ export default function NewProde() {
 		if (firebaseUser?.displayName !== null ) {
 			return firebaseUser.displayName;
 		} else {
-			return firebaseUser?.email?.split("@");
+			return firebaseUser?.email?.split("@")[0];
 		}
 	}
 
