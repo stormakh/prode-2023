@@ -9,7 +9,7 @@ export default function CandidateVoteBox({CandidateName,ImageUrl, theme, votes, 
           <div className="text-center text-black">
             
             <div className='flex flex-row justify-around p-2 '>
-                <Image className='h-60 w-auto' src={ImageUrl} alt={CandidateName} style={{maxWidth:'50%', borderBottomColor : theme.color }}/>
+                <Image className='h-48 aspect-square'  src={ImageUrl} alt={CandidateName} style={{maxWidth:'50%', borderBottomColor : theme.color}}/>
                 <div className='flex flex-col flex-grow justify-center items-start p-2'>
                   { // si el nombre es muy largo, lo achico
                       CandidateName !== 'Myriam Bregman'?
