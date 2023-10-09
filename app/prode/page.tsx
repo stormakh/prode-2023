@@ -7,12 +7,14 @@ import { useEffect, useState } from "react";
 import { createProde } from "@/utils/api/prodes";
 import { CreateProdeRequestDto } from "@/models/prode";
 import Navbar from "../components/Navbar";
+import NoUserModal from "../components/NoUserModal";
+import SignInModal from "../components/SignInModal";
 
 type ProdeName = z.infer<typeof prodeNameSchema>;
 
 const prodeNameSchema = z
 	.string()
-	.nonempty( { message: "El nombre no puede estar vacio" })
+	.nonempty({ message: "El nombre no puede estar vacio" })
 	.refine(
 		(value) => {
 			return (
@@ -26,27 +28,24 @@ const prodeNameSchema = z
 		}
 	);
 
-	const prodeNameInputSchema = z
-	.string()
-	.refine(
-		(value) => {
-			return (
-				!value.includes(".") &&
-				!value.includes("?") &&
-				value.length <= 50
-			);
-		},
-		{
-			message: "El nombre no puede contener puntos ni signos de pregunta",
-		}
-	);
+const prodeNameInputSchema = z.string().refine(
+	(value) => {
+		return (
+			!value.includes(".") && !value.includes("?") && value.length <= 50
+		);
+	},
+	{
+		message: "El nombre no puede contener puntos ni signos de pregunta",
+	}
+);
 
 export default function NewProde() {
 	const { isAuthenticated, firebaseUser } = useAuth();
 	const router = useRouter();
+	const [signInModal, setSignInModal] = useState(false);
 
 	function getUsableOwnerName() {
-		if (firebaseUser?.displayName !== null ) {
+		if (firebaseUser?.displayName !== null) {
 			return firebaseUser.displayName;
 		} else {
 			return firebaseUser?.email?.split("@")[0];
@@ -65,25 +64,29 @@ export default function NewProde() {
 	}
 
 	const handleCreateProde = async () => {
+		if (firebaseUser?.isAnonymous) {
+			setSignInModal(true);
+			return;
+		}
 		try {
 			prodeNameSchema.parse(prodeName);
-		console.log("creando prode");
-		const newProde: CreateProdeRequestDto = {
-			name: prodeName,
-			slug: generateSlug(prodeName),
-			owner: firebaseUser.uid,
-			ownerName: getUsableOwnerName(),
-		};
-		const prode = await createProde(newProde, firebaseUser);
-		console.log(prode);
+			console.log("creando prode");
+			const newProde: CreateProdeRequestDto = {
+				name: prodeName,
+				slug: generateSlug(prodeName),
+				owner: firebaseUser.uid,
+				ownerName: getUsableOwnerName(),
+			};
+			const prode = await createProde(newProde, firebaseUser);
+			console.log(prode);
 
-		router.push(`/prode/${newProde.slug}`);
-	} catch (err) {
-		if (err instanceof z.ZodError) {
-			setCreateProdeError(err.errors[0].message);
+			router.push(`/prode/${newProde.slug}`);
+		} catch (err) {
+			if (err instanceof z.ZodError) {
+				setCreateProdeError(err.errors[0].message);
+			}
 		}
-		}
-	}
+	};
 
 	function handleProdeNameInput(e: React.ChangeEvent<HTMLInputElement>) {
 		let input = e.target.value;
@@ -104,36 +107,41 @@ export default function NewProde() {
 	const [prodeNameError, setProdeNameError] = useState<string>("");
 	const [createProdeError, setCreateProdeError] = useState<string>("");
 
-
 	function CrearProdeBtn() {
-		return(
+		return (
 			<>
-			<button
-						className="w-full bg-teal-500 text-white rounded-md font-bold p-2"
-						onClick={handleCreateProde}
-					>
-						Crear
-			</button>
+				<button
+					className="w-full bg-teal-500 text-white rounded-md font-bold p-2"
+					onClick={handleCreateProde}
+				>
+					Crear
+				</button>
 			</>
-		)	
+		);
 	}
 
 	function CrearProdeBtnDisabled() {
-		return(
+		return (
 			<>
-			<button
-						className="w-full bg-teal-500 text-white rounded-md font-bold p-2 opacity-50 cursor-not-allowed"
-						disabled
-					>
-						Crear
-			</button>
+				<button
+					className="w-full bg-teal-500 text-white rounded-md font-bold p-2 opacity-50 cursor-not-allowed"
+					disabled
+				>
+					Crear
+				</button>
 			</>
-		)	
+		);
+	}
+
+	async function endModal() {
+		await handleCreateProde();
+		setSignInModal(false);
 	}
 
 	return (
 		<div className=" min-h-screen flex flex-col">
-			<Navbar  />
+			<Navbar />
+			{signInModal && <SignInModal endModal={endModal} />}
 			<div className="p-2 flex flex-col justify-between items-stretch">
 				<div className="flex flex-col gap-y-3">
 					<div className="w-full border-b border-teal-500">
@@ -169,16 +177,18 @@ export default function NewProde() {
 					<p className="line-clamp-2 text-red-500 text-sm p-1 text-center">
 						{createProdeError}
 					</p>
-					
+
 					{
 						firebaseUser?.isAnonymous ? (
 							<>
-								<CrearProdeBtnDisabled/>
-								<p className="text-grey-200">
+								<CrearProdeBtn />
+								{/* <p className="text-grey-200">
 									Debes estar registrado CON GOOGLE para crear un prode{" "}
-								</p>
+								</p> */}
 							</>
-						) : <CrearProdeBtn/>
+						) : (
+							<CrearProdeBtn />
+						)
 						//agregar mensaje de que tiene que estar registrado para crear un prode
 					}
 				</div>

@@ -111,7 +111,7 @@ export default function InputVote({
 			setErrorMessage("Tus votos NO suman 100%");
 			return;
 		}
-		if (AnonUsername == null) {
+		if (firebaseUser?.isAnonymous && !firebaseUser?.username) {
 			setErrorMessage("Debes registrarte para votar");
 			return;
 		}
@@ -129,7 +129,9 @@ export default function InputVote({
 				voterUid: firebaseUser.uid,
 				votes: votes as CandidateVotes,
 				voterDisplayName:
-					firebaseUser?.username ?? firebaseUser?.displayName,
+					firebaseUser?.username ??
+					firebaseUser?.displayName ??
+					firebaseUser?.email?.split("@")[0],
 			},
 			params.slug
 		).then(() => {
