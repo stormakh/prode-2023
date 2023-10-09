@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import NavbarVacia from "../components/NavbarVacia";
 import { useAuth } from "../contexts/AuthContext";
 import { z } from "zod";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { createProde } from "@/utils/api/prodes";
 import { CreateProdeRequestDto } from "@/models/prode";
 import Navbar from "../components/Navbar";
@@ -62,8 +62,8 @@ export default function NewProde() {
 			.replace(/\s+/g, "-") // replace spaces with hyphens
 			.replace(/-+/g, "-"); // remove consecutive hyphens
 	}
-
 	const handleCreateProde = async () => {
+		console.log(firebaseUser);
 		if (firebaseUser?.isAnonymous) {
 			setSignInModal(true);
 			return;

@@ -77,14 +77,16 @@ export default function AuthContextProvider({
 				return result;
 			} catch (error: any) {
 				if (error.code === "auth/credential-already-in-use") {
+					console.log(error);
 					const credential =
 						GoogleAuthProvider.credentialFromError(error);
 					if (credential) {
-						const userPromise = signInWithCredential(
+						const userPromise = await signInWithCredential(
 							auth,
 							credential
 						);
-						setFirebaseUser(userPromise);
+						console.log(userPromise.user);
+						setFirebaseUser({ ...userPromise.user, prop: "aaaa" });
 						return userPromise;
 					}
 				}
