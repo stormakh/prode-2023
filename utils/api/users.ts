@@ -20,7 +20,7 @@ export async function createUser(
 	console.log(usersRes);
 }
 
-export async function getUser(uid: string): Promise<any> {
+export async function getUserByID(uid: string): Promise<any> {
   const userRef = doc(collection(db, DB_USERS_COLLECTION_NAME), uid);
   const userSnap = await getDoc(userRef);
 

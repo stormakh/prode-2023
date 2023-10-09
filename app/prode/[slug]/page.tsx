@@ -56,18 +56,17 @@ export default function ProdeDetails({ params }: { params: { slug: string } }) {
     console.log("TODO ALERT: CHECK IF PRODE EXISTS & IF USER HAS VOTED")
     const getVoteAsync = async () => {
       if (!firebaseUser) return
-      const hasVoted = await checkVoteExists(params.slug, firebaseUser.uid)
-      console.log("HAS VOTED after fetch:", hasVoted)
-      const prode = await getProde(params.slug)
-      console.log("PRODE CHECK:", prode)
-      if (prode) {
-        setProde(prode)
-      }
+      const hasVoted = await checkVoteExists(params.slug, firebaseUser.uid).catch((err) => {
+        console.log(err + 'checkVoteExists error')
+      })
+      const prodeRes = await getProde(params.slug);
+      setProde(prodeRes)
+      console.log("PRODE CHECK:", prodeRes)
       if (hasVoted == 'true') {
         console.log("HAS VOTED:", hasVoted)
         setShowProdeStats(true)
       }else {
-        console.log("HAS NOT VOTED:", hasVoted)
+        console.log("HAS VOTED:", hasVoted)
         setShowProdeStats(false)
       }
 
@@ -84,6 +83,7 @@ export default function ProdeDetails({ params }: { params: { slug: string } }) {
         <InputVote
           params={{
             slug: params.slug,
+            ownerName : prode?.ownerName,
             setShowProdeStats: setShowProdeStats,
           }}
         />

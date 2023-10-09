@@ -45,6 +45,14 @@ export default function NewProde() {
 	const { isAuthenticated, firebaseUser } = useAuth();
 	const router = useRouter();
 
+	function getUsableOwnerName() {
+		if (firebaseUser?.displayName !== null ) {
+			return firebaseUser.displayName;
+		} else {
+			return firebaseUser?.email?.split("@");
+		}
+	}
+
 	function generateSlug(prodName: ProdeName): string {
 		return String(prodName)
 			.normalize("NFKD") // split accented characters into their base characters and diacritical marks
@@ -64,6 +72,7 @@ export default function NewProde() {
 			name: prodeName,
 			slug: generateSlug(prodeName),
 			owner: firebaseUser.uid,
+			ownerName: getUsableOwnerName(),
 		};
 		const prode = await createProde(newProde, firebaseUser);
 		console.log(prode);
