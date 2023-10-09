@@ -4,11 +4,14 @@ import { CandidateList } from "@/utils/candidateInfo/candidateList"
 import CandidateVoteBox from "../../components/CandidateVoteBox"
 import Navbar from "../../components/Navbar"
 import { useAuth } from "../../contexts/AuthContext"
-import { createVote, getVote } from "@/utils/api/votes"
+import { checkVoteExists, createVote, getVote } from "@/utils/api/votes"
 import ProdeStats from "./prode_stats"
 import InputVote from "./input_vote"
 import { getProde } from "@/utils/api/prodes"
 import { GetProdeResponseDto } from "@/models/prode"
+
+
+
 
 type VoteType = {
   candidateId: number
@@ -53,16 +56,22 @@ export default function ProdeDetails({ params }: { params: { slug: string } }) {
     console.log("TODO ALERT: CHECK IF PRODE EXISTS & IF USER HAS VOTED")
     const getVoteAsync = async () => {
       if (!firebaseUser) return
+      const hasVoted = await checkVoteExists(params.slug, firebaseUser.uid)
+      console.log("HAS VOTED after fetch:", hasVoted)
       const prode = await getProde(params.slug)
-      const vote = await getVote(params.slug, firebaseUser.uid)
       console.log("PRODE CHECK:", prode)
       if (prode) {
         setProde(prode)
       }
-      if (vote) {
+      if (hasVoted == 'true') {
+        console.log("HAS VOTED:", hasVoted)
         setShowProdeStats(true)
+      }else {
+        console.log("HAS NOT VOTED:", hasVoted)
+        setShowProdeStats(false)
       }
-      console.log("INITIAL VOTE CHECK:", vote)
+
+      console.log("INITIAL VOTE CHECK:", hasVoted)
     }
     getVoteAsync()
   }, [firebaseUser])

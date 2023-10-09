@@ -58,3 +58,10 @@ export async function getVote(
   const vote = await voteSnapshot.data()
   return vote as GetVoteResponseDto
 }
+
+export async function checkVoteExists(prodeSlug : string, voteId : string){
+  
+  const response = await fetch(`https://us-central1-miprode-2023.cloudfunctions.net/checkVoteExists?prode_slug=${[prodeSlug]}&vote_id=${voteId}`)
+  const data = await response.json()
+  return data
+}
