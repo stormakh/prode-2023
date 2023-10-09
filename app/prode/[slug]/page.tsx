@@ -63,7 +63,6 @@ export default function ProdeDetails({ params }: { params: { slug: string } }) {
       setProde(prodeRes)
       console.log("PRODE CHECK:", prodeRes)
       if (hasVoted.exists == true) {
-        
         setShowProdeStats(true)
       }else {
        

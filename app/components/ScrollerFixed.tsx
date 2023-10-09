@@ -149,7 +149,7 @@ export default function ScrollerFixed({
 					numberPart={numberPart.big}
 				/>
 				<input
-					className="p-3 text-center text-3xl w-8/12 focus:border-t-transparent focus:outline-0"
+					className="py-3 text-center text-3xl w-8/12 focus:border-t-transparent focus:outline-0"
 					value={currentSelected.big}
 					type="number"
 					onChange={(e) => {
@@ -178,7 +178,7 @@ export default function ScrollerFixed({
 					numberPart={numberPart.small}
 				/>
 				<input
-					className="p-3 text-3xl w-8/12 focus:border-t-transparent focus:outline-0"
+					className="py-3 text-3xl w-8/12 focus:border-t-transparent focus:outline-0"
 					value={currentSelected.small - (currentSelected.small % 1)}
 					type="number"
 					onChange={(e) => {

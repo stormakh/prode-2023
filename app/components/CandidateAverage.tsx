@@ -14,7 +14,7 @@ export default function CandidateAverage({
 
   return (
     <div className="flex flex-row gap-x-2">
-      <div className="w-1/5 flex-none">
+      <div className="w-1/5 flex-none aspect-square">
         <Image
           src={candidate.imageUrl}
           alt={candidate.candidateName}

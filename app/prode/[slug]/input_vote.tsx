@@ -50,7 +50,9 @@ export default function InputVote({
   useEffect(() => {
     const getVoteAsync = async () => {
       if (!firebaseUser) return
-      const vote = await getVote(params.slug, firebaseUser.uid)
+      const vote = await getVote(params.slug, firebaseUser.uid).catch((err) => {
+        console.log("Error getting vote", err)
+      });
     }
     getVoteAsync()
   }, [firebaseUser])
@@ -189,18 +191,18 @@ export default function InputVote({
       </div>
 
       <div
-        className={`sticky bottom-0 w-full rounded-none  justify-center items-center font-bold  bg-juan p-2 mt-24 ${
+        className={`sticky bottom-0 w-full rounded-none  justify-center items-center font-bold  bg-juan p-2 mt-4 ${
           Number(totalVotes) <= 100
             ? "bg-juan text-teal-500"
             : "bg-red-400 text-gray-900 animate-pulse"
         }`}
       >
-        <p>{"Tus votos totales son :" + totalVotes + "%"}</p>
+        <p  >{`Tus votos totales son :${totalVotes}%`}</p>
       </div>
       <div className="text-center line-clamp-2 text-red-500 text-xl font-bold p-1">
         {errorMessage}
       </div>
-      <div className="flex w-full  justify-center items-center font-bold text-white p-2 mt-24">
+      <div className="flex w-full  justify-center items-center font-bold text-white p-2 mt-4">
         <button
           className="p-2 rounded-md bg-teal-500 w-full"
           onClick={handleClickUploadResults}
