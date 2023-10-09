@@ -71,7 +71,7 @@ export default function NavbarProdeUsers() {
                       )}
                     >
                       
-                      {AnonUsername ? 'Logged in as ' : 'You are NOT logged in'}{AnonUsername? <b>{AnonUsername}</b> : ''}
+                      {AnonUsername ? 'Tu usuario es ' : 'NO estas logueado'}{AnonUsername? <b>{AnonUsername}</b> : ''}
                     </a>
                   )}
                 </Menu.Item>
