@@ -40,7 +40,7 @@ export default function Dashboard(){
                         <div key={index} className="flex gap-x-2 px-2  py-1 w-full items-baseline justify-between border-b border-teal-500 bg-teal-500 text-white rounded-md min-w-fit">
                             <p className="font-bold border-r pr-2 line-clamp-1 w-full max-w-fit flex-none">{prode.name}</p>
                             <p className=" line-clamp-1 text-xs opacity-80 flex-initial">{'Elecciones Presidenciales 2023'}</p>  
-                            <Link href={'/prode/'+prode.name} className="bg-juan rounded-md px-1 py-1 inline-flex items-center min-w-fit text-sm gap-x-1">{"Detalle"}<TbExternalLink className='h-5 w-full' ></TbExternalLink></Link>
+                            <Link href={`/prode/${prode.slug}`} className="bg-juan rounded-md px-1 py-1 inline-flex items-center min-w-fit text-sm gap-x-1">{"Detalle"}<TbExternalLink className='h-5 w-full' ></TbExternalLink></Link>
                         </div> 
                     ))}
                     {!firebaseUser?.isAnonymous ? 

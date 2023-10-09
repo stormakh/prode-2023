@@ -29,15 +29,26 @@ export default function InputVote({
 		ownerName: string | undefined;
 	};
 }) {
-	function loadVote(){
-		const localVote : VoteType[] = JSON.parse(localStorage.getItem('candidateVote') || '[]');
-		return localVote;
-	}
-	const initialCandidateVote: VoteType[] = loadVote();
-	const [vote, setVote] = useState<VoteType[]>(initialCandidateVote);
+
+	
+	const [vote, setVote] = useState<VoteType[]>(loadVote());
 	const [errorMessage, setErrorMessage] = useState<string>("");
 	const { firebaseUser, AnonUsername } = useAuth();
- 
+	console.log(params.slug,  'params.slug' )
+	
+	function loadVote() {
+		try {
+			if (typeof window === 'undefined' || typeof window.localStorage === 'undefined') {
+				console.log("window or localStorage is undefined");
+				return [] as VoteType[];
+			}
+			const localVote: VoteType[] = JSON.parse(window.localStorage.getItem('candidateVote') || '[]');
+			return localVote;
+		} catch (err) {
+			console.error(err);
+			return [] as VoteType[];
+		}
+	}
 
 	useEffect(() => {
 		
@@ -47,6 +58,7 @@ export default function InputVote({
 			
 		};
 		getVoteAsync();
+		loadVote();
 	}, [firebaseUser]);
 
 	function handleVote(candidateId: number, voteValue: number) {
@@ -169,6 +181,7 @@ export default function InputVote({
 
 					<div className="flex flex-col md:flex-wrap md:flex-row gap-4">
 						{CandidateList.map((candidate, index) => {
+							console.log(vote[index].candidateId , index , "vote index")
 							return (
 								<CandidateVoteBox
 									key={index}
@@ -177,7 +190,7 @@ export default function InputVote({
 									theme={candidate.theme}
 									candidateId={vote[index].candidateId}
 									votes={handleVote}
-									initialVotes={initialCandidateVote[index].voteValue}
+									initialVotes={vote[index].voteValue}
 								/>
 							);
 						})}
