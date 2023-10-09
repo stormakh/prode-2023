@@ -6,38 +6,23 @@ import Navbar from "../../components/Navbar";
 import { useAuth } from "../../contexts/AuthContext";
 import { createVote, getVote } from "@/utils/api/votes";
 import NoUserModal from "@/app/components/NoUserModal";
+import { useRouter } from "next/navigation";
 
 type VoteType = {
 	candidateId: number;
 	voteValue: number;
 };
 
-const initialCandidateVote: VoteType[] = [
-	{
-		candidateId: 1,
-		voteValue: 0.0,
-	},
-	{
-		candidateId: 2,
-		voteValue: 0.0,
-	},
-	{
-		candidateId: 3,
-		voteValue: 0.0,
-	},
-	{
-		candidateId: 4,
-		voteValue: 0.0,
-	},
-	{
-		candidateId: 5,
-		voteValue: 0.0,
-	},
-];
+  function loadVote(){
+    const localVote = JSON.parse(localStorage.getItem('candidateVote') || '[]');
+    console.log("initial Vote loaded from local storage", localVote);
+    return localVote;
+  }
+   
+  
 
-initialCandidateVote.forEach((candidate, index) => {
-	candidate.voteValue = CandidateList[index].initialVotes;
-});
+
+const initialCandidateVote: VoteType[] = loadVote();
 
 export default function InputVote({
 	params,
@@ -51,6 +36,7 @@ export default function InputVote({
 	const [vote, setVote] = useState<VoteType[]>(initialCandidateVote);
 	const [errorMessage, setErrorMessage] = useState<string>("");
 	const { firebaseUser, AnonUsername } = useAuth();
+ 
 
 	useEffect(() => {
 		console.log("VOTING SLUG:", params.slug);
@@ -100,6 +86,12 @@ export default function InputVote({
 		// }
 	}
 
+  
+
+  function persistVote() {
+    localStorage.setItem('candidateVote', JSON.stringify(vote));
+  }
+
 	function handleErrorModal() {
 		if (errorMessage == "Debes registrarte para votar") {
 			console.log("ERROR MODAL");
@@ -114,6 +106,7 @@ export default function InputVote({
 	}
 
 	async function handleClickUploadResults() {
+    persistVote();
 		if (totalVotes !== "100.00") {
 			setErrorMessage("Tus votos NO suman 100%");
 			return;
@@ -183,7 +176,7 @@ export default function InputVote({
 									theme={candidate.theme}
 									candidateId={vote[index].candidateId}
 									votes={handleVote}
-									initialVotes={candidate.initialVotes}
+									initialVotes={initialCandidateVote[index].voteValue}
 								/>
 							);
 						})}
