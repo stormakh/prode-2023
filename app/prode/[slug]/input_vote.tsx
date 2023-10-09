@@ -6,23 +6,19 @@ import Navbar from "../../components/Navbar";
 import { useAuth } from "../../contexts/AuthContext";
 import { createVote, getVote } from "@/utils/api/votes";
 import NoUserModal from "@/app/components/NoUserModal";
-import { useRouter } from "next/navigation";
+
 
 type VoteType = {
 	candidateId: number;
 	voteValue: number;
 };
 
-  function loadVote(){
-    const localVote = JSON.parse(localStorage.getItem('candidateVote') || '[]');
-    console.log("initial Vote loaded from local storage", localVote);
-    return localVote;
-  }
+
    
   
 
 
-const initialCandidateVote: VoteType[] = loadVote();
+
 
 export default function InputVote({
 	params,
@@ -33,19 +29,22 @@ export default function InputVote({
 		ownerName: string | undefined;
 	};
 }) {
+	function loadVote(){
+		const localVote : VoteType[] = JSON.parse(localStorage.getItem('candidateVote') || '[]');
+		return localVote;
+	}
+	const initialCandidateVote: VoteType[] = loadVote();
 	const [vote, setVote] = useState<VoteType[]>(initialCandidateVote);
 	const [errorMessage, setErrorMessage] = useState<string>("");
 	const { firebaseUser, AnonUsername } = useAuth();
  
 
 	useEffect(() => {
-		console.log("VOTING SLUG:", params.slug);
-		console.log("VOTING USER:", firebaseUser && firebaseUser.uid);
-		console.log("TODO ALERT: CHECK IF PRODE EXISTS & IF USER HAS VOTED");
+		
 		const getVoteAsync = async () => {
 			if (!firebaseUser) return;
 			const vote = await getVote(params.slug, firebaseUser.uid);
-			console.log("INITIAL VOTE CHECK:", vote);
+			
 		};
 		getVoteAsync();
 	}, [firebaseUser]);
@@ -186,7 +185,7 @@ export default function InputVote({
 				</div>
 			</div>
 
-			<div className="sticky bottom-0   w-full rounded-none  justify-center items-center font-bold text-teal-500 bg-juan p-2 mt-24">
+			<div className={`sticky bottom-0 w-full rounded-none  justify-center items-center font-bold  bg-juan p-2 mt-24 ${ Number(totalVotes) <= 100 ? 'bg-juan text-teal-500' : 'bg-red-400 text-gray-900 animate-pulse'}`}>
 				<p>{"Tus votos totales son :" + totalVotes + "%"}</p>
 			</div>
 			<div className="text-center line-clamp-2 text-red-500 text-xl font-bold p-1">
