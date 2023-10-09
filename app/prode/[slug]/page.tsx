@@ -45,7 +45,7 @@ initialCandidateVote.forEach((candidate, index) => {
 export default function ProdeDetails({ params }: { params: { slug: string } }) {
   const [showProdeStats, setShowProdeStats] = useState<boolean>(false)
   const [prode, setProde] = useState<GetProdeResponseDto | undefined>(undefined)
-  const { firebaseUser } = useAuth()
+  const { firebaseUser,isAuthenticated } = useAuth()
 
   useEffect(() => {
     console.log("VOTING SLUG:", params.slug)
@@ -66,7 +66,7 @@ export default function ProdeDetails({ params }: { params: { slug: string } }) {
     }
     getVoteAsync()
   }, [firebaseUser])
-
+  
   return (
     <main className="">
       {showProdeStats ? (

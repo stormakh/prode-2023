@@ -27,7 +27,7 @@ export const CandidateList: CandidateType[] = [
     candidateIdentifier: "Milei",
     imageUrl: Icono_Milei,
     theme: mileiTheme,
-    initialVotes: 32.5,
+    initialVotes: 32,
     id: 1,
   },
   {
@@ -35,7 +35,7 @@ export const CandidateList: CandidateType[] = [
     candidateIdentifier: "Bullrich",
     imageUrl: Icono_Bullrich,
     theme: patoTheme,
-    initialVotes: 27.95,
+    initialVotes: 27,
     id: 2,
   },
   {
@@ -43,7 +43,7 @@ export const CandidateList: CandidateType[] = [
     candidateIdentifier: "Massa",
     imageUrl: Icono_Massa,
     theme: massaTheme,
-    initialVotes: 26.5,
+    initialVotes: 26,
     id: 3,
   },
   {
@@ -51,7 +51,7 @@ export const CandidateList: CandidateType[] = [
     candidateIdentifier: "Bregman",
     imageUrl: Icono_Bregman,
     theme: BregmanTheme,
-    initialVotes: 5.2,
+    initialVotes: 5,
     id: 4,
   },
   {
@@ -59,7 +59,7 @@ export const CandidateList: CandidateType[] = [
     candidateIdentifier: "Schiaretti",
     imageUrl: Icono_Schiaretti,
     theme: schiarettiTheme,
-    initialVotes: 4.2,
+    initialVotes: 4,
     id: 5,
   },
 ]

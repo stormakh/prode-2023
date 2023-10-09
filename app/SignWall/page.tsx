@@ -20,9 +20,8 @@ export default function SignWall() {
     useEffect(() => {
         if(firebaseUser && !firebaseUser.isAnonymous) {
             backIfPreviosIsProde();
-
             router.push('/dashboard');
-            }
+        }
     }, [firebaseUser]);
 
 
