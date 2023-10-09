@@ -18,9 +18,10 @@
 //   response.send("Hello from Firebase!");
 // });
 // import * as functions from "firebase-functions";
-import * as admin from "firebase-admin";
-admin.initializeApp();
+import * as admin from "firebase-admin"
+admin.initializeApp()
 
-import {incrementVoteStats} from "./updateProdeStats";
+import { incrementVoteStats } from "./updateProdeStats"
+import { checkVoteExists } from "./checkVoteExists"
 
-export {incrementVoteStats};
+export { incrementVoteStats, checkVoteExists }
