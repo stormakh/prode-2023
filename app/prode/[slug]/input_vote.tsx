@@ -5,6 +5,7 @@ import CandidateVoteBox from "../../components/CandidateVoteBox"
 import Navbar from "../../components/Navbar"
 import { useAuth } from "../../contexts/AuthContext"
 import { createVote, getVote } from "@/utils/api/votes"
+import NoUserModal from "@/app/components/NoUserModal"
 
 type VoteType = {
   candidateId: number
@@ -45,7 +46,7 @@ export default function InputVote({
 }) {
   const [vote, setVote] = useState<VoteType[]>(initialCandidateVote)
   const [errorMessage, setErrorMessage] = useState<string>("")
-  const { firebaseUser } = useAuth()
+  const { firebaseUser,AnonUsername } = useAuth()
 
   useEffect(() => {
     console.log("VOTING SLUG:", params.slug)
@@ -95,12 +96,30 @@ export default function InputVote({
     }
   }
 
+    function handleErrorModal(){
+      if(errorMessage == 'Debes registrarte para votar') {
+        console.log("ERROR MODAL")
+        return true
+      }
+      else {
+        return false
+      } 
+    }
+ 
+    function endModal(){
+      setErrorMessage("")
+    }
+  
+
   async function handleClickUploadResults() {
+    if(AnonUsername == null){
+      setErrorMessage("Debes registrarte para votar")
+      return;
+    }
     if (totalVotes !== '100.00') {
       setErrorMessage("Tus votos NO suman 100%")
       return;
     }
-    
     setErrorMessage("")
 
     const votes: Record<string, number> = {}
@@ -131,7 +150,7 @@ export default function InputVote({
   return (
     <main className="">
       <Navbar/>
-
+      {handleErrorModal() ? <NoUserModal endModal={endModal}/> : null}
       <div className="flex justify-center flex-col items-center p-2 ">
         <div className="text-teal-500 max-w-fit flex flex-col">
           <h2 className="text-2xl font-bold">

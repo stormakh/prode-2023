@@ -149,7 +149,7 @@ export default function NavbarProdeUsers() {
 
     <Menu as="div" className="relative inline-block text-left">
       <div>
-        <Menu.Button className="inline-flex w-8 h-8 items-center justify-center gap-x-1.5 rounded-full bg-juan px-1 py-1 text-sm font-semibold text-white">
+        <Menu.Button className="inline-flex w-10 h-10 items-center justify-center gap-x-1.5 rounded-full bg-juan px-1 py-1 text-sm font-semibold text-white">
          { userDisplayName()}
           
         </Menu.Button>

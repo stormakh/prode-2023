@@ -14,7 +14,7 @@ export default function CandidateAverage({
 
   return (
     <div className="flex flex-row gap-x-2">
-      <div className="w-1/5 ">
+      <div className="w-1/5 flex-none">
         <Image
           src={candidate.imageUrl}
           alt={candidate.candidateName}
@@ -32,9 +32,9 @@ export default function CandidateAverage({
           <h1 className="text-black font-semibold text-xl">
             {candidate.candidateName}
           </h1>
-          <h1 className=" text-2xl">{candidate.vote} %</h1>
+          <h1 className=" text-2xl">{candidate.vote?.toFixed(2)} %</h1>
         </div>
-        <div className=" ">
+        <div className="mt-2 md:mt-1 lg:mt-0">
           <div className=" mb-5 h-3 rounded-full bg-gray-200">
             <div
               className="h-3 rounded-full "

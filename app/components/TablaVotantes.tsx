@@ -11,175 +11,7 @@ type userType = {
   votes: votesType[]
 }
 
-const users: userType[] = [
-  //all votes in user must add to 100
-  {
-    name: "Juan re capo",
-    votes: [
-      {
-        vote: 35,
-        candidateId: 1,
-      },
-      {
-        vote: 20,
-        candidateId: 2,
-      },
-      {
-        vote: 35,
-        candidateId: 3,
-      },
-      {
-        vote: 5.5,
-        candidateId: 4,
-      },
-      {
-        vote: 4.5,
-        candidateId: 5,
-      },
-    ],
-  },
-  {
-    name: "User 2",
-    votes: [
-      {
-        vote: 50,
-        candidateId: 1,
-      },
-      {
-        vote: 20,
-        candidateId: 2,
-      },
-      {
-        vote: 30,
-        candidateId: 4,
-      },
-    ],
-  },
-  {
-    name: "User 3",
-    votes: [
-      {
-        vote: 50,
-        candidateId: 1,
-      },
-      {
-        vote: 50,
-        candidateId: 2,
-      },
-    ],
-  },
-  {
-    name: "User 4",
-    votes: [
-      {
-        vote: 50,
-        candidateId: 1,
-      },
-      {
-        vote: 50,
-        candidateId: 2,
-      },
-    ],
-  },
-  {
-    name: "User 5",
-    votes: [
-      {
-        vote: 50,
-        candidateId: 1,
-      },
-      {
-        vote: 50,
-        candidateId: 2,
-      },
-    ],
-  },
-  {
-    name: "User 6",
-    votes: [
-      {
-        vote: 30,
-        candidateId: 1,
-      },
-      {
-        vote: 20,
-        candidateId: 2,
-      },
-      {
-        vote: 50,
-        candidateId: 3,
-      },
-    ],
-  },
-  {
-    name: "User 7",
-    votes: [
-      {
-        vote: 30,
-        candidateId: 1,
-      },
-      {
-        vote: 20,
-        candidateId: 2,
-      },
-      {
-        vote: 50,
-        candidateId: 3,
-      },
-    ],
-  },
-  {
-    name: "User 8",
-    votes: [
-      {
-        vote: 30,
-        candidateId: 1,
-      },
-      {
-        vote: 20,
-        candidateId: 2,
-      },
-      {
-        vote: 50,
-        candidateId: 3,
-      },
-    ],
-  },
-  {
-    name: "Los Pibardos re Facheros",
-    votes: [
-      {
-        vote: 30,
-        candidateId: 1,
-      },
-      {
-        vote: 20,
-        candidateId: 2,
-      },
-      {
-        vote: 50,
-        candidateId: 3,
-      },
-    ],
-  },
-  {
-    name: "User 10",
-    votes: [
-      {
-        vote: 30,
-        candidateId: 1,
-      },
-      {
-        vote: 20,
-        candidateId: 2,
-      },
-      {
-        vote: 50,
-        candidateId: 3,
-      },
-    ],
-  },
-]
+
 
 export default function TablaVotantes({ votesList }: { votesList: IVote[] }) {
   const votes = votesList.map((vote, index) => {
@@ -197,7 +29,7 @@ export default function TablaVotantes({ votesList }: { votesList: IVote[] }) {
     })
 
     return {
-      name: "Pepe" + index,
+      name: vote.voterUid + index,
       votes: userVote,
     }
   })
@@ -222,7 +54,7 @@ export default function TablaVotantes({ votesList }: { votesList: IVote[] }) {
               </div>
               <div className="singlebar  p-2 items-center justify-center flex flex-row  w-full basis-3/4 ">
                 {user.votes.map((vote, index) => {
-                  const votesToWidth = vote.vote.toString() + "%"
+                  const votesToWidth = vote.vote.toFixed(1) + "%"
                   const customRadius =
                     index === 0
                       ? "5px 0 0 5px"
