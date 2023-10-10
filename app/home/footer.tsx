@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 export default function Footer() {
   return (
@@ -11,7 +11,7 @@ export default function Footer() {
 
           <a
             className="inline-flex items-center gap-2 rounded-full border border-white bg-white px-8 py-3 text-teal-500 hover:bg-transparent hover:text-white focus:outline-none focus:ring active:bg-white/90"
-            href="/"
+            href="/SignWall"
           >
             <span className="text-sm font-medium"> Registrate </span>
 
@@ -163,5 +163,5 @@ export default function Footer() {
         </div>
       </div>
     </footer>
-  )
+  );
 }
