@@ -76,6 +76,20 @@ export default function NavbarProdeUsers() {
                   )}
                 </Menu.Item>
                 <Menu.Item>
+                {({ active }) => (
+                <Link
+                  href={'/dashboard'}
+                  className={classNames(
+                    active ? 'bg-gray-100 text-teal-500' : 'text-black',
+                    'block px-4 py-2 text-md text-right font-bold'
+                  )}
+                  
+                >
+                  Mis Prodes
+                </Link>
+                )}
+              </Menu.Item>
+                <Menu.Item>
                   {({ active }) => (
                     <Link
                       href={'/SignWall'}
@@ -120,6 +134,20 @@ export default function NavbarProdeUsers() {
                 >
                   Logueado como <br></br><b>{firebaseUser.email}</b>
                 </a>
+              )}
+            </Menu.Item>
+            <Menu.Item>
+              {({ active }) => (
+                <Link
+                  href={'/dashboard'}
+                  className={classNames(
+                    active ? 'bg-gray-100 text-teal-500' : 'text-black',
+                    'block px-4 py-2 text-md text-right font-bold'
+                  )}
+                  
+                >
+                  Mis Prodes
+                </Link>
               )}
             </Menu.Item>
             <Menu.Item>

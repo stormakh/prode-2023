@@ -143,7 +143,7 @@ export default function ScrollerFixed({
 			className="flex justify-start items-center text-xl sm:w-fit"
 			style={{ ...theme }}
 		>
-			<div className="p-1 flex flex-col justify-start sm:w-20  ">
+			<div className="p-1 flex flex-col items-center justify-start sm:w-20  ">
 				<PlusButton
 					setter={setCurrentSelected}
 					numberPart={numberPart.big}
@@ -172,7 +172,7 @@ export default function ScrollerFixed({
 			<div className="">
 				<p className="m-0 text-3xl">,</p>
 			</div>
-			<div className="p-1 flex flex-col justify-start sm:w-20">
+			<div className="p-1 flex flex-col items-center justify-start sm:w-20">
 				<PlusButton
 					setter={setCurrentSelected}
 					numberPart={numberPart.small}
