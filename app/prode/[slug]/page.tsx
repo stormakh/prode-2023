@@ -9,6 +9,8 @@ import ProdeStats from "./prode_stats"
 import InputVote from "./input_vote"
 import { getProde } from "@/utils/api/prodes"
 import { GetProdeResponseDto } from "@/models/prode"
+import ProdeNotFoundErrorPage from "./error_page"
+import { TbFidgetSpinner } from "react-icons/tb"
 
 
 
@@ -49,7 +51,8 @@ export default function ProdeDetails({ params }: { params: { slug: string } }) {
   const [showProdeStats, setShowProdeStats] = useState<boolean>(false)
   const [prode, setProde] = useState<GetProdeResponseDto | undefined>(undefined)
   const { firebaseUser,isAuthenticated } = useAuth()
-
+  const [isLoading, setIsLoading] = useState<boolean>(true)
+ 
   useEffect(() => {
     console.log("VOTING SLUG:", params.slug)
     console.log("VOTING USER:", firebaseUser && firebaseUser.uid)
@@ -59,7 +62,11 @@ export default function ProdeDetails({ params }: { params: { slug: string } }) {
       const hasVoted = await checkVoteExists(params.slug, firebaseUser.uid).catch((err) => {
         console.log(err + 'checkVoteExists error')
       })
-      const prodeRes = await getProde(params.slug);
+      const prodeRes = await getProde(params.slug).catch((err) => {
+        console.log(err + 'getProde error')
+        return undefined
+      })
+      setIsLoading(false)
       setProde(prodeRes)
       console.log("PRODE CHECK:", prodeRes)
       if (hasVoted.exists == true) {
@@ -76,7 +83,12 @@ export default function ProdeDetails({ params }: { params: { slug: string } }) {
   
   return (
     <main className="">
-      {showProdeStats ? (
+      
+      {
+      isLoading ? <div className="flex justify-center items-center h-screen">
+        <TbFidgetSpinner className=' spin w-1/4 h-1/4' /></div> :
+      prode === undefined && isLoading === false ? <ProdeNotFoundErrorPage/> : 
+      showProdeStats ? (
         <ProdeStats params={{ prode, slug: params.slug }} />
       ) : (
         <InputVote
