@@ -47,15 +47,7 @@ export default function InputVote({
     }
     return localVote
   }
-  useEffect(() => {
-    const getVoteAsync = async () => {
-      if (!firebaseUser) return
-      const vote = await getVote(params.slug, firebaseUser.uid).catch((err) => {
-        console.log("Error getting vote", err)
-      });
-    }
-    getVoteAsync()
-  }, [firebaseUser])
+  
 
   function handleVote(candidateId: number, voteValue: number) {
     var res = 0
@@ -163,11 +155,11 @@ export default function InputVote({
               ? params.ownerName + " te intivó al Prode!"
               : params.slug}
           </h2>
-          <p className="font-bold p-1">
+          <p className="font-bold ">
             Elegí los porcentajes que crees que cada uno de los candidatos va a
             sacar en las elecciones para presidente del 2023.
           </p>
-          <p className="font-bold border-b-1/2 p-2  border-teal-500">
+          <p className="font-bold border-b-1/2   border-teal-500">
             Jugá y compartí con tus amigos!
           </p>
 
@@ -197,7 +189,7 @@ export default function InputVote({
             : "bg-red-400 text-gray-900 animate-pulse"
         }`}
       >
-        <p  suppressHydrationWarning>{`Tus votos totales son :${totalVotes}%`}</p>
+        <p  >{`Tus votos totales son :${totalVotes}%`}</p>
       </div>
       <div className="text-center line-clamp-2 text-red-500 text-xl font-bold p-1">
         {errorMessage}
