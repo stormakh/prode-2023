@@ -171,7 +171,7 @@ export default function InputVote({
             Jugá y compartí con tus amigos!
           </p>
 
-          <div className="flex flex-col md:flex-wrap md:flex-row gap-4">
+          <div className="flex flex-col sm:flex-wrap sm:flex-row gap-y-4">
             {CandidateList.map((candidate, index) => {
               if (!candidate) return <></>
               return (
@@ -197,7 +197,7 @@ export default function InputVote({
             : "bg-red-400 text-gray-900 animate-pulse"
         }`}
       >
-        <p  >{`Tus votos totales son :${totalVotes}%`}</p>
+        <p  suppressHydrationWarning>{`Tus votos totales son :${totalVotes}%`}</p>
       </div>
       <div className="text-center line-clamp-2 text-red-500 text-xl font-bold p-1">
         {errorMessage}

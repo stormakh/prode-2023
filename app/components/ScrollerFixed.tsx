@@ -112,7 +112,7 @@ export default function ScrollerFixed({
 	}) {
 		return (
 			<button
-				className="px-8  border-2 rounded-md w-full "
+				className="px-8  border-2 rounded-md w-full sm:w-1/2"
 				onClick={(e) => handleMinusButton(setter, numberPart)}
 				style={{ borderColor: theme.color }}
 			>
@@ -129,7 +129,7 @@ export default function ScrollerFixed({
 	}) {
 		return (
 			<button
-				className="px-8  border-2 rounded-md w-full "
+				className="px-8  border-2 rounded-md w-full sm:w-1/2"
 				onClick={(e) => handlePlusButton(setter, numberPart)}
 				style={{ borderColor: theme.color }}
 			>
@@ -140,10 +140,10 @@ export default function ScrollerFixed({
 
 	return (
 		<div
-			className="flex flex-grow justify-center items-center text-xl"
+			className="flex justify-start items-center text-xl sm:w-fit"
 			style={{ ...theme }}
 		>
-			<div className="p-1 flex-grow">
+			<div className="p-1 flex flex-col justify-start sm:w-20  ">
 				<PlusButton
 					setter={setCurrentSelected}
 					numberPart={numberPart.big}
@@ -172,7 +172,7 @@ export default function ScrollerFixed({
 			<div className="">
 				<p className="m-0 text-3xl">,</p>
 			</div>
-			<div className="p-1 flex-grow">
+			<div className="p-1 flex flex-col justify-start sm:w-20">
 				<PlusButton
 					setter={setCurrentSelected}
 					numberPart={numberPart.small}

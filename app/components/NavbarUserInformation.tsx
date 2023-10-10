@@ -84,7 +84,7 @@ export default function NavbarProdeUsers() {
                         'block px-4 py-2 text-md text-right font-bold'
                       )}
                     >
-                      Registrate con Google
+                      Registrate
                     </Link>
                   )}
                 </Menu.Item>
@@ -118,7 +118,7 @@ export default function NavbarProdeUsers() {
                     'block px-4 py-2 text-sm line-clamp-2 border-b'
                   )}
                 >
-                  Signed in as <br></br><b>{firebaseUser.email}</b>
+                  Logueado como <br></br><b>{firebaseUser.email}</b>
                 </a>
               )}
             </Menu.Item>
