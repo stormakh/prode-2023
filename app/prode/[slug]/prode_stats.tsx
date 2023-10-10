@@ -9,11 +9,13 @@ import { getFullProde } from "@/utils/api/prodes"
 import Link from "next/link"
 import { CgLink } from "react-icons/cg"
 import { FaRegCopy } from "react-icons/fa"
+import { ProdeSteps } from "@/app/components/ProdeSteps"
+
 export type CandidateStatsType = CandidateType & { vote?: number }
 export default function ProdeStats({
   params,
 }: {
-  params: { prode?: GetProdeResponseDto; slug: string }
+  params: { prode?: GetProdeResponseDto; slug: string; firebaseUser: any }
 }) {
   const [candidateStats, setCandidateStats] =
     useState<CandidateStatsType[]>(CandidateList)
@@ -21,13 +23,12 @@ export default function ProdeStats({
     GetFullProdeResponseDto | undefined
   >(undefined)
 
-  function handleCopyShareLink(link : string) {
-    try{
+  function handleCopyShareLink(link: string) {
+    try {
       navigator.clipboard.writeText(link)
-    }catch(err){
+    } catch (err) {
       console.log(err)
     }
-    
   }
 
   useEffect(() => {
@@ -45,12 +46,20 @@ export default function ProdeStats({
     }
     getFullProdeAsync()
   }, [params.prode, params.slug])
+
   return (
     <>
-      <Navbar isEnabledCreaElTuyoBtn={true}/>
+      <Navbar isEnabledCreaElTuyoBtn={true} />
       <div className="p-4">
-        <div className=" border-b-1/2 border-teal-500">
-          <h1 className="text-teal-500 text-3xl font-bold">Promedio</h1>
+        {params.prode?.owner === params.firebaseUser?.uid ? (
+          <div className="ml-2 mr-2 mb-5">
+            <ProdeSteps step={3} />
+          </div>
+        ) : (
+          <></>
+        )}
+        <div className=" border-b-1/2">
+          <h1 className="text-3xl font-bold">Promedio</h1>
         </div>
         <div className="flex flex-col mt-4 gap-y-4 justify-between">
           {candidateStats.map((candidate, index) => {
@@ -60,17 +69,31 @@ export default function ProdeStats({
       </div>
       <div className="flex flex-col justify-center w-full p-4 gap-y-10">
         <TablaVotantes votesList={fullProde?.votes || []} />
-        <Link href={'/prode'} className="bg-teal-500 text-white font-bold p-2 rounded-md text-2xl text-center">
+        <Link
+          href={"/prode"}
+          className="bg-teal-500 text-white font-bold p-2 rounded-md text-2xl text-center"
+        >
           Crea el tuyo
         </Link>
         <div className="flex flex-col justify-center items-center gap-y-2">
-          <h2 className="w-4/5 text-2xl text-center font-bold border-b border-teal-500 text-teal-500">Compartilo</h2>
+          <h2 className="w-4/5 text-2xl text-center font-bold border-b border-teal-500 text-teal-500">
+            Compartilo
+          </h2>
           <div className="w-full inline-flex justify-center items-center h-10 max-h-fit">
-              <div className="inline-flex items-center w-4/5 h-10 border-dashed border-r-0 border-teal-500 border-2 rounded-md rounded-r-none border-opacity-70">
-                <CgLink className="text-lg text-teal-500 w-1/6 h-2/3 max-w-fit" />
-                <p className="line-clamp-1">{`https://www.prodearg.com/prode/${params.slug}`}</p>      
-              </div>
-              <button onClick={e => handleCopyShareLink(`https://www.prodearg.com/prode/${params.slug}`)} className="text-lg text-white bg-teal-500 rounded-md w-1/5 h-10 max-w-fit rounded-l-none p-3 hover:text-teal-500 hover:bg-juan hover:border"><FaRegCopy   className="" /></button>
+            <div className="inline-flex items-center w-4/5 h-10 border-dashed border-r-0 border-teal-500 border-2 rounded-md rounded-r-none border-opacity-70">
+              <CgLink className="text-lg text-teal-500 w-1/6 h-2/3 max-w-fit" />
+              <p className="line-clamp-1">{`https://www.prodearg.com/prode/${params.slug}`}</p>
+            </div>
+            <button
+              onClick={(e) =>
+                handleCopyShareLink(
+                  `https://www.prodearg.com/prode/${params.slug}`
+                )
+              }
+              className="text-lg text-white bg-teal-500 rounded-md w-1/5 h-10 max-w-fit rounded-l-none p-3 hover:text-teal-500 hover:bg-juan hover:border"
+            >
+              <FaRegCopy className="" />
+            </button>
           </div>
         </div>
       </div>
