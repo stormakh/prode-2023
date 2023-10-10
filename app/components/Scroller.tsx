@@ -8,7 +8,7 @@ type PropType = {
 
 }
 
-const EmblaCarousel: React.FC<PropType> = (props) => {
+const EmblaScroller: React.FC<PropType> = (props) => {
   const { loop } = props
     
   return (
@@ -31,4 +31,4 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
   )
 }
 
-export default EmblaCarousel
+export default EmblaScroller
