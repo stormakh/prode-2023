@@ -1,25 +1,25 @@
-import { CandidateType } from "@/models/candidate"
-import Icono_Milei from "@/public/Icono_Milei.jpg"
-import Icono_Bullrich from "@/public//Icono_Bullrich.jpg"
-import Icono_Massa from "@/public//Icono_Massa.jpg"
-import Icono_Bregman from "@/public//Icono_Bregman.png"
-import Icono_Schiaretti from "@/public//Icono_Schiaretti.png"
+import { CandidateType } from "@/models/candidate";
+import Icono_Milei from "@/public/Icono_Milei.jpg";
+import Icono_Bullrich from "@/public//Icono_Bullrich.jpg";
+import Icono_Massa from "@/public//Icono_Massa.jpg";
+import Icono_Bregman from "@/public//Icono_Bregman.png";
+import Icono_Schiaretti from "@/public//Icono_Schiaretti.png";
 
 export const mileiTheme = {
   color: "#9C339F",
-}
+};
 const patoTheme = {
   color: "#F6CA0E",
-}
+};
 const massaTheme = {
   color: "#63CCE4",
-}
+};
 const BregmanTheme = {
   color: "#EE265A",
-}
+};
 const schiarettiTheme = {
   color: "#504EAA",
-}
+};
 
 export const CandidateList: CandidateType[] = [
   {
@@ -27,7 +27,7 @@ export const CandidateList: CandidateType[] = [
     candidateIdentifier: "Milei",
     imageUrl: Icono_Milei,
     theme: mileiTheme,
-    initialVotes: 32,
+    initialVotes: 20,
     id: 1,
   },
   {
@@ -35,7 +35,7 @@ export const CandidateList: CandidateType[] = [
     candidateIdentifier: "Bullrich",
     imageUrl: Icono_Bullrich,
     theme: patoTheme,
-    initialVotes: 27,
+    initialVotes: 20,
     id: 2,
   },
   {
@@ -43,7 +43,7 @@ export const CandidateList: CandidateType[] = [
     candidateIdentifier: "Massa",
     imageUrl: Icono_Massa,
     theme: massaTheme,
-    initialVotes: 26,
+    initialVotes: 20,
     id: 3,
   },
   {
@@ -51,7 +51,7 @@ export const CandidateList: CandidateType[] = [
     candidateIdentifier: "Bregman",
     imageUrl: Icono_Bregman,
     theme: BregmanTheme,
-    initialVotes: 5,
+    initialVotes: 20,
     id: 4,
   },
   {
@@ -59,7 +59,7 @@ export const CandidateList: CandidateType[] = [
     candidateIdentifier: "Schiaretti",
     imageUrl: Icono_Schiaretti,
     theme: schiarettiTheme,
-    initialVotes: 4,
+    initialVotes: 20,
     id: 5,
   },
-]
+];
