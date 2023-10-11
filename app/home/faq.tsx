@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 export default function Faq() {
   return (
@@ -49,9 +49,7 @@ export default function Faq() {
         <p className="mt-4 leading-relaxed text-gray-700">
           ProdeArg es un proyecto 100% OpenSource sin fines de lucro que
           inicialmente busca optimizar la experiencia de las personas para
-          compartir sus predicciones politicas. Pero ademas busca cambiar la
-          naturaleza de las encuestas por consultoras, donde la mayoria de los
-          resultados son falsos y 0 transparentes.
+          compartir sus predicciones politicas.
         </p>
       </details>
 
@@ -100,10 +98,10 @@ export default function Faq() {
           prodes a quienes tengan una cuenta de Gmail. Esto ya reduce la
           cantidad de prodes que se pueden realizar, ya que Google ya de por si
           realiza un trabajo de reduccion de bots. Ademas realizamos un analisis
-          de los resultados, donde eliminamos aquellos que se escapan de la
-          distribucion normal.
+          de los resultados globales, donde eliminamos aquellos que se escapan
+          de la distribucion normal.
         </p>
       </details>
     </div>
-  )
+  );
 }

@@ -11,10 +11,9 @@ export default function Features() {
             </h2>
 
             <p className="mt-4 text-gray-600">
-              Una forma divertida de enterarse de las tendencias politicas
-              arrancando desde como ve uno el panorama. Buscamos la forma de
-              crear un mecanismo lo mas transparente y amigable posible para que
-              sea entretenido responder.
+              Una forma divertida de enterarse de las tendencias de estas
+              elecciones. Buscamos crear un mecanismo lo mas{" "}
+              <b>transparente y amigable</b> posible.
             </p>
 
             <Link
@@ -149,5 +148,5 @@ export default function Features() {
         </div>
       </div>
     </section>
-  )
+  );
 }

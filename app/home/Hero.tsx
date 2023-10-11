@@ -94,9 +94,9 @@ export default function Hero() {
               Arma tu Prode Elecciones 2023 🇦🇷
             </h1>
             <p className="mt-6 text-lg leading-8 text-gray-600">
-              Prode Arg es el <b>Prode de las Elecciones 2023 🇦🇷</b> que te
-              permite <b>compartir con tus amigos</b> como piensa cada uno que
-              resultan las elecciones
+              Prode Arg es el <b>Prode de las Elecciones 2023 🇦🇷</b>. Es un
+              sistema online que te permite{" "}
+              <b>compartir con familia y amigos</b> sus predicciones.
             </p>
             <div className="mt-10 flex flex-wrap items-center justify-center gap-x-12">
               <a

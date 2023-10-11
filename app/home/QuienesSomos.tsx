@@ -106,20 +106,25 @@ function Individuales({
 
 export default function QuienesSomos() {
   return (
-    <div
-      id="Team"
-      className="grid grid-cols-1 gap-4 p-8 lg:grid-cols-3 sm:grid-cols-2"
-    >
-      {people.map((person, index) => (
-        <Individuales
-          key={index}
-          name={person.name}
-          role={person.role}
-          equipo={person.equipo}
-          imgUrl={person.imgUrl}
-          descripcion={person.descripcion}
-        />
-      ))}
-    </div>
+    <>
+      <h2 className="ml-5 text-left text-3xl font-bold sm:text-4xl">
+        Quienes Somos
+      </h2>
+      <div
+        id="Team"
+        className="grid grid-cols-1 gap-4 p-4 lg:grid-cols-3 sm:grid-cols-2"
+      >
+        {people.map((person, index) => (
+          <Individuales
+            key={index}
+            name={person.name}
+            role={person.role}
+            equipo={person.equipo}
+            imgUrl={person.imgUrl}
+            descripcion={person.descripcion}
+          />
+        ))}
+      </div>
+    </>
   );
 }
