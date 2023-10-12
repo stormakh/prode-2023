@@ -1,65 +1,65 @@
-"use client"
-import { useEffect, useMemo, useState } from "react"
-import { CandidateList } from "@/utils/candidateInfo/candidateList"
-import CandidateVoteBox from "../../components/CandidateVoteBox"
-import Navbar from "../../components/Navbar"
-import { useAuth } from "../../contexts/AuthContext"
-import { createVote, getVote } from "@/utils/api/votes"
-import NoUserModal from "@/app/components/NoUserModal"
-import { useRouter } from "next/navigation"
-import useLocalStorage from "@/app/hooks/useLocalStorage"
-import { ProdeSteps } from "@/app/components/ProdeSteps"
+"use client";
+import { useEffect, useMemo, useState } from "react";
+import { CandidateList } from "@/utils/candidateInfo/candidateList";
+import CandidateVoteBox from "../../components/CandidateVoteBox";
+import Navbar from "../../components/Navbar";
+import { useAuth } from "../../contexts/AuthContext";
+import { createVote, getVote } from "@/utils/api/votes";
+import NoUserModal from "@/app/components/NoUserModal";
+import { useRouter } from "next/navigation";
+import useLocalStorage from "@/app/hooks/useLocalStorage";
+import { ProdeSteps } from "@/app/components/ProdeSteps";
 
 type VoteType = {
-  candidateId: number
-  voteValue: number
-}
+  candidateId: number;
+  voteValue: number;
+};
 
 export default function InputVote({
   params,
 }: {
   params: {
-    slug: string
-    setShowProdeStats: (shouldShow: boolean) => void
-    ownerName: string | undefined
-    ownerId: string | undefined
-  }
+    slug: string;
+    setShowProdeStats: (shouldShow: boolean) => void;
+    ownerName: string | undefined;
+    ownerId: string | undefined;
+  };
 }) {
   const [localStorageVote, setLocalStorageVote] = useLocalStorage(
     "candidateVote",
     []
-  )
-  const [vote, setVote] = useState<VoteType[]>(() => loadVote())
-  const [errorMessage, setErrorMessage] = useState<string>("")
-  const { firebaseUser, AnonUsername } = useAuth()
+  );
+  const [vote, setVote] = useState<VoteType[]>(() => loadVote());
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const { firebaseUser, AnonUsername } = useAuth();
 
   function loadVote() {
-    const localVote: VoteType[] = localStorageVote
+    const localVote: VoteType[] = localStorageVote;
     if (!localVote || localVote?.length === 0) {
-      const initialVoteAux: VoteType[] = []
+      const initialVoteAux: VoteType[] = [];
       Array(5)
         .fill(0)
         .map((value, index) => {
           initialVoteAux.push({
             candidateId: index,
             voteValue: CandidateList[index].initialVotes,
-          })
-        })
-      return initialVoteAux
+          });
+        });
+      return initialVoteAux;
     }
-    return localVote
+    return localVote;
   }
 
   function handleVote(candidateId: number, voteValue: number) {
-    var res = 0
+    var res = 0;
     vote?.forEach((candidate) => {
       // sumo los votos de todos los candidatos
       if (candidate.candidateId !== candidateId) {
-        res = res + candidate.voteValue
+        res = res + candidate.voteValue;
       }
-    })
+    });
 
-    res = res + voteValue // sumo el voto que se quiere agregar
+    res = res + voteValue; // sumo el voto que se quiere agregar
 
     // if (res <= 100 && res >= 0) {
     // verifico que no se pase de 100 o a los negativos
@@ -68,13 +68,13 @@ export default function InputVote({
         return {
           ...candidate,
           voteValue: voteValue,
-        }
+        };
       } else {
-        return candidate
+        return candidate;
       }
-    })
+    });
 
-    setVote(nextVotes)
+    setVote(nextVotes);
     // } else {
     // 	console.log("no se puede votar");
     // 	if (res > 100) {
@@ -87,41 +87,41 @@ export default function InputVote({
   }
 
   function persistVote() {
-    setLocalStorageVote(vote)
+    setLocalStorageVote(vote);
   }
 
   function handleErrorModal() {
     if (errorMessage == "Debes registrarte para votar") {
-      console.log("ERROR MODAL")
-      return true
+      console.log("ERROR MODAL");
+      return true;
     } else {
-      return false
+      return false;
     }
   }
 
   function endModal() {
-    setErrorMessage("")
+    setErrorMessage("");
   }
 
   async function handleClickUploadResults() {
-    persistVote()
+    persistVote();
     if (totalVotes !== "100.00") {
-      setErrorMessage("Tus votos NO suman 100%")
-      return
+      setErrorMessage("Tus votos NO suman 100%");
+      return;
     }
     if (firebaseUser?.isAnonymous && !firebaseUser?.username) {
-      setErrorMessage("Debes registrarte para votar")
-      return
+      setErrorMessage("Debes registrarte para votar");
+      return;
     }
 
-    setErrorMessage("")
+    setErrorMessage("");
 
-    const votes: Record<string, number> = {}
+    const votes: Record<string, number> = {};
     CandidateList.forEach((candidate, index) => {
       votes[candidate.candidateIdentifier as keyof typeof votes] =
-        vote[index].voteValue
-    })
-    console.log("FINAL VOTES:", votes)
+        vote[index].voteValue;
+    });
+    console.log("FINAL VOTES:", votes);
     await createVote(
       {
         voterUid: firebaseUser.uid,
@@ -133,17 +133,17 @@ export default function InputVote({
       },
       params.slug
     ).then(() => {
-      params.setShowProdeStats(true)
-    })
+      params.setShowProdeStats(true);
+    });
   }
 
   const totalVotes = useMemo(() => {
-    var res = 0
+    var res = 0;
     vote?.forEach((candidate) => {
-      res = res + candidate.voteValue
-    })
-    return res.toFixed(2)
-  }, [vote])
+      res = res + candidate.voteValue;
+    });
+    return res.toFixed(2);
+  }, [vote]);
 
   return (
     <main className="">
@@ -173,7 +173,7 @@ export default function InputVote({
 
           <div className="flex flex-col sm:flex-wrap sm:flex-row gap-y-4">
             {CandidateList.map((candidate, index) => {
-              if (!candidate) return <></>
+              if (!candidate) return <></>;
               return (
                 <CandidateVoteBox
                   key={index}
@@ -184,7 +184,7 @@ export default function InputVote({
                   votes={handleVote}
                   initialVotes={(vote && vote[index]?.voteValue) || 0}
                 />
-              )
+              );
             })}
           </div>
         </div>
@@ -207,7 +207,7 @@ export default function InputVote({
           className="p-2 rounded-md bg-teal-500 w-full"
           onClick={handleClickUploadResults}
         >
-          Ver Resultados
+          Enviar Votos
         </button>
       </div>
       <div className="px-2 my-5 ">
@@ -218,5 +218,5 @@ export default function InputVote({
         </p>
       </div>
     </main>
-  )
+  );
 }
