@@ -14,7 +14,7 @@ const people = [
     },
     imgUrl: Profile_Pic_Santi,
     descripcion:
-      "Licenciatura en Sistemas en UADE, fan Numero 1 de Tailwind desde 2023",
+      "Licenciatura en Sistemas en UADE, fan Numero 1 de Tailwind desde 2023.",
     link: "https://www.linkedin.com/in/santiago-tormakh-278b71183/",
   },
   {
@@ -89,7 +89,7 @@ function Individuales({
         </time>
 
         <Link href={link}>
-          <h3 className="mt-0.5 text-lg font-medium text-gray-900">
+          <h3 className="mt-0.5 text-lg font-medium text-gray-900  text-justify">
             {descripcion}
           </h3>
         </Link>

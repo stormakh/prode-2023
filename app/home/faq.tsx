@@ -11,7 +11,7 @@ export default function Faq() {
         open
       >
         <summary className="flex cursor-pointer items-center justify-between gap-1.5 text-gray-900">
-          <h2 className="font-medium">Como se que hacen con mis datos?</h2>
+          <h2 className="font-medium">¿Cómo se que hacen con mis datos?</h2>
 
           <span className="relative h-5 w-5 shrink-0">
             <svg
@@ -49,14 +49,14 @@ export default function Faq() {
         <p className="mt-4 leading-relaxed text-gray-700">
           ProdeArg es un proyecto 100% OpenSource sin fines de lucro que
           inicialmente busca optimizar la experiencia de las personas para
-          compartir sus predicciones politicas.
+          compartir sus predicciones políticas.
         </p>
       </details>
 
       <details className="group rounded-lg bg-gray-50 p-6 [&_summary::-webkit-details-marker]:hidden">
         <summary className="flex cursor-pointer items-center justify-between gap-1.5 text-gray-900">
           <h2 className="font-medium">
-            Como evitan la manipulacion de los resultados a traves de ejercitos
+            ¿Cómo evitan la manipulación de los resultados a traves de ejércitos
             de Bots?
           </h2>
 
@@ -94,12 +94,12 @@ export default function Faq() {
         </summary>
 
         <p className="mt-4 leading-relaxed text-gray-700">
-          Para empezar, la primer medida que tomamos es limitar la creacion de
+          Para empezar, la primer medida que tomamos es limitar la creación de
           prodes a quienes tengan una cuenta de Gmail. Esto ya reduce la
           cantidad de prodes que se pueden realizar, ya que Google ya de por si
-          realiza un trabajo de reduccion de bots. Ademas realizamos un analisis
+          realiza un trabajo de reduccion de bots. Además realizamos un análisis
           de los resultados globales, donde eliminamos aquellos que se escapan
-          de la distribucion normal.
+          de la distribución normal.
         </p>
       </details>
     </div>
