@@ -48,7 +48,7 @@ export default function GlobalStatsPanel() {
       <div className=" justify-center flex w">
         {globalStats.stats != undefined && (
           <>
-            <div className="w-11/12  sm:w-fit grid sm:grid-cols-2  grid-cols-1 p-2 gap-2 justify-center">
+            <div className="w-11/12  sm:w-fit grid sm:grid-cols-2 md:grid-cols-3 grid-cols-1 p-2 gap-2 justify-center">
               <ProdeArgGlobalStats
                 prodesAmount={globalStats.prodesAmount}
                 votesAmount={globalStats.votesAmount}
