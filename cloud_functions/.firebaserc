@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "miprode-2023"
-  }
+    "default": "miprode-2023",
+    "miprode-2023": "miprode-2023"
+  },
+  "targets": {},
+  "etags": {}
 }

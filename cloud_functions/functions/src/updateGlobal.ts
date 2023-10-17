@@ -1,11 +1,5 @@
 import * as admin from "firebase-admin";
 import * as functions from "firebase-functions";
-// type VoteMap = {
-//     Bregman: number
-//     Bullrich: number
-//     Massa: number
-//     Milei: number
-//     Schiaretti: number };
 
 type VoteMap = {
   [key: string]: number;
@@ -28,15 +22,15 @@ const sumVoteMaps = (
   }
   return result;
 };
-export const incrementVoteStats = functions.firestore
+export const updateGlobalStats = functions.firestore
   .document("/prodes/{slugProde}/votes/{voteUid}")
-  .onCreate(async (snap, context) => {
+  .onCreate(async (snap) => {
     const newVoteData: VoteMap = snap.data().votes;
-    const prodeRef = admin
+    const globalStatsRef = admin
       .firestore()
-      .doc(`/prodes/${context.params.slugProde}`);
+      .doc("/globalStats/presidential2023");
 
-    const prodeDoc = await prodeRef.get();
+    const prodeDoc = await globalStatsRef.get();
     if (!prodeDoc.exists) {
       console.error("Documento Prode no encontrado");
       return;
@@ -46,7 +40,7 @@ export const incrementVoteStats = functions.firestore
 
     const updatedStats = sumVoteMaps(currentStats, newVoteData, votesAmount);
 
-    return prodeRef.update({
+    return globalStatsRef.update({
       stats: updatedStats,
       votesAmount: votesAmount + 1,
     });

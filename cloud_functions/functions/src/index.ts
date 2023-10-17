@@ -18,10 +18,17 @@
 //   response.send("Hello from Firebase!");
 // });
 // import * as functions from "firebase-functions";
-import * as admin from "firebase-admin"
-admin.initializeApp()
+import * as admin from "firebase-admin";
+admin.initializeApp();
 
-import { incrementVoteStats } from "./updateProdeStats"
-import { checkVoteExists } from "./checkVoteExists"
+import { incrementVoteStats } from "./updateProdeStats";
+import { checkVoteExists } from "./checkVoteExists";
+import { updateGlobalStats } from "./updateGlobal";
+import { aggregatePastVotes } from "./countCurrentVotes";
 
-export { incrementVoteStats, checkVoteExists }
+export {
+  incrementVoteStats,
+  checkVoteExists,
+  updateGlobalStats,
+  aggregatePastVotes,
+};

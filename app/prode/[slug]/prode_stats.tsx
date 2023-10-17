@@ -1,51 +1,51 @@
-import { useEffect, useState } from "react"
-import { CandidateList } from "@/utils/candidateInfo/candidateList"
-import { CandidateType } from "@/models/candidate"
-import Navbar from "../../components/Navbar"
-import CandidateAverage from "../../components/CandidateAverage"
-import TablaVotantes from "../../components/TablaVotantes"
-import { GetFullProdeResponseDto, GetProdeResponseDto } from "@/models/prode"
-import { getFullProde } from "@/utils/api/prodes"
-import Link from "next/link"
-import { CgLink } from "react-icons/cg"
-import { FaRegCopy } from "react-icons/fa"
-import { ProdeSteps } from "@/app/components/ProdeSteps"
+import { useEffect, useState } from "react";
+import { CandidateList } from "@/utils/candidateInfo/candidateList";
+import { CandidateType } from "@/models/candidate";
+import Navbar from "../../components/Navbar";
+import CandidateAverage from "../../components/CandidateAverage";
+import TablaVotantes from "../../components/TablaVotantes";
+import { GetFullProdeResponseDto, GetProdeResponseDto } from "@/models/prode";
+import { getFullProde } from "@/utils/api/prodes";
+import Link from "next/link";
+import { CgLink } from "react-icons/cg";
+import { FaRegCopy } from "react-icons/fa";
+import { ProdeSteps } from "@/app/components/ProdeSteps";
 
-export type CandidateStatsType = CandidateType & { vote?: number }
+export type CandidateStatsType = CandidateType & { vote?: number };
 export default function ProdeStats({
   params,
 }: {
-  params: { prode?: GetProdeResponseDto; slug: string; firebaseUser: any }
+  params: { prode?: GetProdeResponseDto; slug: string; firebaseUser: any };
 }) {
   const [candidateStats, setCandidateStats] =
-    useState<CandidateStatsType[]>(CandidateList)
+    useState<CandidateStatsType[]>(CandidateList);
   const [fullProde, setFullProde] = useState<
     GetFullProdeResponseDto | undefined
-  >(undefined)
+  >(undefined);
 
   function handleCopyShareLink(link: string) {
     try {
-      navigator.clipboard.writeText(link)
+      navigator.clipboard.writeText(link);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   }
 
   useEffect(() => {
-    const localCandidateStats: CandidateStatsType[] = []
+    const localCandidateStats: CandidateStatsType[] = [];
     CandidateList.forEach((candidate) => {
-      const vote = params.prode?.stats[candidate.candidateIdentifier]
-      const candidateWithVote = { ...candidate, vote: vote }
-      localCandidateStats.push(candidateWithVote)
-    })
-    setCandidateStats(localCandidateStats)
+      const vote = params.prode?.stats[candidate.candidateIdentifier];
+      const candidateWithVote = { ...candidate, vote: vote };
+      localCandidateStats.push(candidateWithVote);
+    });
+    setCandidateStats(localCandidateStats);
     const getFullProdeAsync = async () => {
-      const fullProdeLocal = await getFullProde(params.slug)
-      console.log("FULL PRODE:", fullProdeLocal)
-      setFullProde(fullProdeLocal)
-    }
-    getFullProdeAsync()
-  }, [params.prode, params.slug])
+      const fullProdeLocal = await getFullProde(params.slug);
+      console.log("FULL PRODE:", fullProdeLocal);
+      setFullProde(fullProdeLocal);
+    };
+    getFullProdeAsync();
+  }, [params.prode, params.slug]);
 
   return (
     <>
@@ -58,12 +58,15 @@ export default function ProdeStats({
         ) : (
           <></>
         )}
-        <div className=" border-b-1/2">
+        <div className="inline-flex border-b-1/2 w-full justify-between items-end">
           <h1 className="text-3xl font-bold">Promedio</h1>
+          <h2 className="text-lg text-right opacity-25 line-clamp-1">
+            {params.prode?.name}
+          </h2>
         </div>
         <div className="flex flex-col mt-4 gap-y-4 justify-between">
           {candidateStats.map((candidate, index) => {
-            return <CandidateAverage candidate={candidate} key={index} />
+            return <CandidateAverage candidate={candidate} key={index} />;
           })}
         </div>
       </div>
@@ -98,5 +101,5 @@ export default function ProdeStats({
         </div>
       </div>
     </>
-  )
+  );
 }
