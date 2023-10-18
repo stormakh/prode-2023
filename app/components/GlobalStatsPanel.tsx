@@ -41,8 +41,8 @@ export default function GlobalStatsPanel() {
     });
   }, []);
   return (
-    <section id="globalStats">
-      <h1 className="text-3xl font-bold text-center mb-2">
+    <section id="globalStats mb-8">
+      <h1 className="text-3xl font-bold text-center mb-6">
         Estadisticas Globales
       </h1>
       <div className=" justify-center flex w">
